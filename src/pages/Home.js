@@ -10,6 +10,13 @@ const Home = () => {
   const [isLiking, setIsLiking] = useState(false);
 
 
+  // Add these state variables to your existing useState declarations
+  const [showCommentForm, setShowCommentForm] = useState(false);
+  const [commentText, setCommentText] = useState('');
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+
+
+
   useEffect(() => {
     setIsLoaded(true);
 
@@ -30,7 +37,7 @@ const Home = () => {
       const response = await fetch('/api/blogs')
       const json = await response.json()
 
-      console.log(json)
+      //console.log(json)
 
       if (response.ok) {
         setBlogs(json)
@@ -59,85 +66,93 @@ const Home = () => {
     setVisibleBlogs(prev => Math.min(prev + 3, blogs?.length || 0));
   };
 
-  //Handling like
-  // const handleLike = async (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   if (isLiking) return;
-
-  //   setIsLiking(true);
-
-  //   try {
-  //     console.log(e);
-  //     const response = await fetch(`/api/blogs/like`, {
-  //       method: 'PATCH',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-
-  //     if (response.ok) {
-  //       const updatedBlog = await response.json();
-  //       // Backend returns the full blog object, so extract likes from it
-  //       // setLikes(updatedBlog.likes);
-  //     } else if (response.status === 404) {
-  //       // Handle invalid ID or blog not found
-  //       const errorData = await response.json();
-  //       console.error('Blog not found or invalid ID:', errorData.error);
-  //       // Optionally show user feedback here
-  //     } else if (response.status === 500) {
-  //       // Handle server errors
-  //       const errorData = await response.json();
-  //       console.error('Server error:', errorData.error);
-  //       // Optionally show user feedback here
-  //     } else {
-  //       // Handle other HTTP errors
-  //       console.error('Failed to update likes. Status:', response.status);
-  //     }
-  //   } catch (error) {
-  //     // Handle network errors or other exceptions
-  //     console.error('Network error updating likes:', error);
-  //     // Optionally show user feedback here
-  //   } finally {
-  //     setIsLiking(false);
-  //   }
-  // };
-
+  //handle Like
   const handleLike = async (e, blogId) => {
-  e.preventDefault();
-  e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
 
-  if (isLiking) return;
+    if (isLiking) return;
 
-  setIsLiking(true);
+    setIsLiking(true);
 
-  try {
-    const response = await fetch(`/api/blogs/${blogId}/like`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      const response = await fetch(`/api/blogs/${blogId}/like`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    if (response.ok) {
-      const updatedBlog = await response.json();
-      //setLikes(updatedBlog.likes);
-    } else if (response.status === 404) {
-      const errorData = await response.json();
-      console.error('Blog not found or invalid ID:', errorData.error);
-    } else if (response.status === 500) {
-      const errorData = await response.json();
-      console.error('Server error:', errorData.error);
-    } else {
-      console.error('Failed to update likes. Status:', response.status);
+      if (response.ok) {
+        const updatedBlog = await response.json();
+        //setLikes(updatedBlog.likes);
+      } else if (response.status === 404) {
+        const errorData = await response.json();
+        console.error('Blog not found or invalid ID:', errorData.error);
+      } else if (response.status === 500) {
+        const errorData = await response.json();
+        console.error('Server error:', errorData.error);
+      } else {
+        console.error('Failed to update likes. Status:', response.status);
+      }
+    } catch (error) {
+      console.error('Network error updating likes:', error);
+    } finally {
+      setIsLiking(false);
     }
-  } catch (error) {
-    console.error('Network error updating likes:', error);
-  } finally {
-    setIsLiking(false);
-  }
-};
+  };
+
+  // Add this handleCommentSubmit function
+  const handleCommentSubmit = async (e, blogId) => {
+    e.preventDefault();
+
+    if (!commentText.trim() || !selectedBlog || isSubmittingComment) return;
+
+    setShowCommentForm(false)
+
+    console.log(commentText, blogId);
+
+    setIsSubmittingComment(true);
+
+    try {
+      const response = await fetch(`api/blogs/${blogId}/comment`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          newComment: commentText.trim(),
+        }),
+      });
+
+      if (response.ok) {
+        const updatedBlog = await response.json();
+
+        // Update the blog in the local state
+        setBlogs(prevBlogs =>
+          prevBlogs.map(blog =>
+            blog._id === selectedBlog._id ? updatedBlog : blog
+          )
+        );
+
+        // Update selected blog
+        setSelectedBlog(updatedBlog);
+
+        // Reset form
+        setCommentText('');
+        setShowCommentForm(false);
+
+        console.log('Comment added successfully');
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to add comment:', errorData.error);
+      }
+    } catch (error) {
+      console.error('Network error adding comment:', error);
+    } finally {
+      setIsSubmittingComment(false);
+    }
+  };
 
 
   return (
@@ -161,17 +176,6 @@ const Home = () => {
           <FloatingShape delay={1} size="w-20 h-20" position={{ x: 20, y: 80 }} />
           <FloatingShape delay={3} size="w-28 h-28" position={{ x: 85, y: 40 }} />
 
-          {/* Grid Pattern */}
-          {/* <div className="absolute inset-0 opacity-50">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-            <div 
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(156, 146, 172, 0.05) 1px, transparent 0)`,
-                backgroundSize: '60px 60px'
-              }}
-            />
-          </div> */}
         </div>
 
         {/* Main Content */}
@@ -580,26 +584,114 @@ const Home = () => {
                             <span>Like</span>
                           </button>
 
-                          <button className="flex items-center space-x-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-semibold text-white border border-white/20 hover:scale-105 transition-all duration-300">
+                          <button
+                            className="flex items-center space-x-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-semibold text-white border border-white/20 hover:scale-105 transition-all duration-300"
+                            onClick={() => setShowCommentForm(true)}
+                          >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                             </svg>
                             <span>Comment</span>
                           </button>
+
+                          {/* Comment Form Modal */}
+                          
+                          {showCommentForm && (
+                            <div className="fixed inset-0 z-[20000] flex items-center justify-center p-4">
+                              {/* Backdrop */}
+                              <div
+                                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                                onClick={() => {
+                                  setShowCommentForm(false);
+                                  setCommentText('');
+                                }}
+                              />
+
+                              {/* Comment Form */}
+                              <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-white/20 backdrop-blur-xl max-w-lg w-full mx-4 shadow-2xl">
+                                {/* Header */}
+                                <div className="flex items-center justify-between mb-6">
+                                  <h3 className="text-2xl font-bold text-white flex items-center">
+                                    <svg className="w-6 h-6 text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
+                                    Add Comment
+                                  </h3>
+                                  <button
+                                    onClick={() => {
+                                      setShowCommentForm(false);
+                                      setCommentText('');
+                                    }}
+                                    className="p-2 bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300"
+                                  >
+                                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                  </button>
+                                </div>
+
+                                {/* Form */}
+                                <form onSubmit={(e) => handleCommentSubmit(e, selectedBlog._id)} className="space-y-6">
+                                  <div>
+                                    <textarea
+                                      value={commentText}
+                                      onChange={(e) => setCommentText(e.target.value)}
+                                      placeholder="Write your comment here..."
+                                      className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/60 resize-none focus:outline-none focus:border-blue-400 transition-all duration-300 min-h-[120px]"
+                                      required
+                                    />
+                                  </div>
+
+                                  <div className="flex items-center justify-end space-x-3">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setShowCommentForm(false);
+                                        setCommentText('');
+                                      }}
+                                      className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-semibold text-white border border-white/20 transition-all duration-300"
+                                    >
+                                      Cancel
+                                    </button>
+                                    <button
+                                      type="submit"
+                                      disabled={!commentText?.trim() || isSubmittingComment}
+                                      className={`px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 ${(!commentText?.trim() || isSubmittingComment)
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : 'hover:shadow-lg hover:shadow-blue-500/25'
+                                        }`}
+                                    >
+                                      {isSubmittingComment ? (
+                                        <span className="flex items-center">
+                                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                          </svg>
+                                          Submitting...
+                                        </span>
+                                      ) : (
+                                        'Submit Comment'
+                                      )}
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="text-sm text-white/60">
+                            Published {selectedBlog.timestamp}
+                          </div>
                         </div>
 
-                        <div className="text-sm text-white/60">
-                          Published {selectedBlog.timestamp}
-                        </div>
                       </div>
-
                     </div>
+
+                    {/* Decorative corner elements */}
+                    <div className="absolute top-0 left-0 w-20 h-20 border-l-2 border-t-2 border-blue-400/30 rounded-tl-3xl" />
+                    <div className="absolute bottom-0 right-0 w-20 h-20 border-r-2 border-b-2 border-purple-400/30 rounded-br-3xl" />
+
                   </div>
-
-                  {/* Decorative corner elements */}
-                  <div className="absolute top-0 left-0 w-20 h-20 border-l-2 border-t-2 border-blue-400/30 rounded-tl-3xl" />
-                  <div className="absolute bottom-0 right-0 w-20 h-20 border-r-2 border-b-2 border-purple-400/30 rounded-br-3xl" />
-
                 </div>
               </div>
             </div>

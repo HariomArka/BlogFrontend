@@ -1,4 +1,5 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import { AuthProvider } from './context/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -10,16 +11,58 @@ import Contact from './pages/Contact';
 import WriteBlog from './pages/WriteBlog';
 import Myblogs from './pages/Myblog';
 
+
+// const App = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [username, setUsername] = useState('');
+//   return (
+//     <Router>
+//       <div className="flex flex-col min-h-screen">
+//         <Navbar isLoggedIn={isLoggedIn} username={username} />
+//         <main className="flex-grow">
+//           <Routes>
+//             <Route path="/" element={<Home />} />
+//             <Route path="/about" element={<About />} />
+//             {/* <Route path="/login" element={<Login />} /> */}
+//             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} />} />
+//             <Route path="/contact" element={<Contact />} />
+//             <Route path="/writeblog" element={<WriteBlog />} />
+//             <Route path="/myblogs" element={<Myblogs />} />
+//             <Route path="/register" element={<Register />} />
+//           </Routes>
+//         </main>
+//         <Footer />
+//       </div>
+//     </Router>
+//   );
+// };
+// export default App;
+
+
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (token && user) {
+      setIsLoggedIn(true);
+      setUsername(user.email || 'User');
+    }
+  }, []);
+
   return (
+    <AuthProvider>
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn} username={username} />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/writeblog" element={<WriteBlog />} />
             <Route path="/myblogs" element={<Myblogs />} />
@@ -29,6 +72,7 @@ const App = () => {
         <Footer />
       </div>
     </Router>
+    </AuthProvider>
   );
 };
 

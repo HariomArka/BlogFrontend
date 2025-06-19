@@ -1,113 +1,15 @@
-// import React, { useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-
-// const Register = () => {
-//   useEffect(() => {
-//     // Trigger swap animation on mount
-//     document.getElementById('register-image').classList.add('animate-slide-left');
-//     document.getElementById('register-form').classList.add('animate-slide-right');
-//   }, []);
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
-//       <div
-//         className="bg-white shadow-xl rounded-lg overflow-hidden max-w-4xl w-full grid grid-cols-1 md:grid-cols-2"
-//       >
-//         {/* Left: Form */}
-//         <div
-//           id="register-form"
-//           className="p-8 flex flex-col justify-center opacity-0"
-//         >
-//           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-//             Join BlogWithMe
-//           </h2>
-//           <div className="space-y-6">
-//             <div>
-//               <label
-//                 htmlFor="username"
-//                 className="block text-sm font-medium text-gray-700"
-//               >
-//                 Username
-//               </label>
-//               <input
-//                 type="text"
-//                 id="username"
-//                 className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-600 focus:border-blue-600 transition-colors duration-200"
-//                 placeholder="Choose a username"
-//               />
-//             </div>
-//             <div>
-//               <label
-//                 htmlFor="email"
-//                 className="block text-sm font-medium text-gray-700"
-//               >
-//                 Email
-//               </label>
-//               <input
-//                 type="email"
-//                 id="email"
-//                 className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-600 focus:border-blue-600 transition-colors duration-200"
-//                 placeholder="Enter your email"
-//               />
-//             </div>
-//             <div>
-//               <label
-//                 htmlFor="password"
-//                 className="block text-sm font-medium text-gray-700"
-//               >
-//                 Password
-//               </label>
-//               <input
-//                 type="password"
-//                 id="password"
-//                 className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-600 focus:border-blue-600 transition-colors duration-200"
-//                 placeholder="Create a password"
-//               />
-//             </div>
-//             <button
-//               className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
-//             >
-//               Register
-//             </button>
-//             <p className="text-center text-sm text-gray-600">
-//               Already have an account?{' '}
-//               <Link
-//                 to="/login"
-//                 className="text-blue-600 hover:underline hover:text-blue-800 transition-colors duration-200"
-//               >
-//                 Log In
-//               </Link>
-//             </p>
-//           </div>
-//         </div>
-
-//         {/* Right: Image */}
-//         <div id="register-image" className="hidden md:block opacity-0">
-//           <img
-//             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPjAY-0-xMEA9B5lLFerrRPbJvP6EGixjhuw&s"
-//             alt="Register Illustration"
-//             className="w-full h-full object-cover"
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Register;
-
-
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Eye, EyeOff, User, Lock, Mail, ArrowRight, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
+import axios from 'axios';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [formData, setFormData] = useState({ 
-    username: '', 
-    email: '', 
-    password: '', 
-    confirmPassword: '' 
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -122,11 +24,11 @@ const Register = () => {
 
   useEffect(() => {
     setIsAnimated(true);
-    
+
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
-    
+
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
@@ -134,10 +36,10 @@ const Register = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
+
     // Real-time validation
     const newValidations = { ...validations };
-    
+
     switch (name) {
       case 'username':
         newValidations.username = value.length >= 3;
@@ -153,7 +55,7 @@ const Register = () => {
         newValidations.confirmPassword = value === formData.password && value.length > 0;
         break;
     }
-    
+
     setValidations(newValidations);
   };
 
@@ -180,12 +82,40 @@ const Register = () => {
     return 'Strong';
   };
 
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // client‑side validation guard
+    if (!validations.username || !validations.email ||
+      !validations.password || !validations.confirmPassword) {
+      return alert('Please fix the highlighted errors first.');
+    }
+
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => setIsLoading(false), 2000);
+    try {
+      // ② hit the Express route
+      const res = await axios.post(`/api/auth/register`,
+        {
+          email: formData.email,
+          password: formData.password,
+          username: formData.username   // optional, if your schema accepts it
+        }
+      );
+      setFormData({username:'',email:'',confirmPassword:'',password:''})
+      // ③ store token & optionally redirect
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify({ email: res.data.email }));
+      // e.g. navigate('/dashboard');
+      alert('Registration successful!');
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.error || 'Registration failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
+
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900">
@@ -195,10 +125,10 @@ const Register = () => {
         <div className="absolute top-32 right-20 w-80 h-80 bg-emerald-500/30 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-32 left-20 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }}></div>
         <div className="absolute top-1/3 right-1/3 w-56 h-56 bg-cyan-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '3s' }}></div>
-        
+
         {/* Dynamic Mesh Grid */}
         <div className="absolute inset-0 bg-gradient-to-l from-transparent via-emerald-500/5 to-transparent transform skew-y-12"></div>
-        
+
         {/* Floating Particles */}
         {[...Array(20)].map((_, i) => (
           <div
@@ -212,9 +142,9 @@ const Register = () => {
             }}
           ></div>
         ))}
-        
+
         {/* Mouse Follower */}
-        <div 
+        <div
           className="absolute w-8 h-8 bg-emerald-400/20 rounded-full blur-sm pointer-events-none transition-all duration-500 ease-out"
           style={{
             left: mousePosition.x - 16,
@@ -227,7 +157,7 @@ const Register = () => {
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className={`w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-12 transform transition-all duration-1000 ${isAnimated ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          
+
           {/* Left Side - Registration Form */}
           <div className="flex items-center justify-center order-2 lg:order-1">
             <div className="w-full max-w-lg">
@@ -263,7 +193,7 @@ const Register = () => {
                     />
                     <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
                       {formData.username && (
-                        validations.username ? 
+                        validations.username ?
                           <CheckCircle className="h-5 w-5 text-green-400" /> :
                           <AlertCircle className="h-5 w-5 text-red-400" />
                       )}
@@ -286,7 +216,7 @@ const Register = () => {
                     />
                     <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
                       {formData.email && (
-                        validations.email ? 
+                        validations.email ?
                           <CheckCircle className="h-5 w-5 text-green-400" /> :
                           <AlertCircle className="h-5 w-5 text-red-400" />
                       )}
@@ -316,21 +246,20 @@ const Register = () => {
                         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </button>
                     </div>
-                    
+
                     {/* Password Strength Indicator */}
                     {formData.password && (
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-gray-400">Password strength:</span>
-                          <span className={`font-medium ${
-                            passwordStrength < 50 ? 'text-red-400' : 
+                          <span className={`font-medium ${passwordStrength < 50 ? 'text-red-400' :
                             passwordStrength < 75 ? 'text-yellow-400' : 'text-green-400'
-                          }`}>
+                            }`}>
                             {getPasswordStrengthText()}
                           </span>
                         </div>
                         <div className="w-full bg-white/10 rounded-full h-2">
-                          <div 
+                          <div
                             className={`h-2 rounded-full transition-all duration-300 ${getPasswordStrengthColor()}`}
                             style={{ width: `${passwordStrength}%` }}
                           ></div>
@@ -355,7 +284,7 @@ const Register = () => {
                     />
                     <div className="absolute inset-y-0 right-0 pr-4 flex items-center space-x-2">
                       {formData.confirmPassword && (
-                        validations.confirmPassword ? 
+                        validations.confirmPassword ?
                           <CheckCircle className="h-5 w-5 text-green-400" /> :
                           <AlertCircle className="h-5 w-5 text-red-400" />
                       )}
@@ -371,9 +300,9 @@ const Register = () => {
 
                   {/* Terms & Conditions */}
                   <div className="flex items-start space-x-3">
-                    <input 
-                      type="checkbox" 
-                      className="w-5 h-5 mt-0.5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 bg-white/10 border-white/20" 
+                    <input
+                      type="checkbox"
+                      className="w-5 h-5 mt-0.5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 bg-white/10 border-white/20"
                       required
                     />
                     <p className="text-sm text-gray-300 leading-relaxed">
@@ -390,9 +319,9 @@ const Register = () => {
 
                   {/* Register Button */}
                   <button
-                    type="button"
+                    type="submit"              // swap from "button"
                     onClick={handleRegister}
-                    disabled={isLoading}
+                    disabled={isLoading || Object.values(validations).includes(false)}
                     className="w-full relative group bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -431,12 +360,12 @@ const Register = () => {
                   Journey
                 </span>
               </h2>
-              
+
               <p className="text-xl text-gray-300 max-w-md">
                 Join thousands of writers sharing their stories, experiences, and creativity with the world.
               </p>
             </div>
-            
+
             {/* Features List */}
             <div className="space-y-4 w-full max-w-md">
               {[
