@@ -16,7 +16,6 @@ const Home = () => {
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
 
 
-
   useEffect(() => {
     setIsLoaded(true);
 
@@ -520,9 +519,20 @@ const Home = () => {
                     {/* Article Content */}
                     <div className="prose prose-lg max-w-none">
                       <div className="text-white/90 leading-relaxed space-y-6">
-                        <p className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
-                          {selectedBlog.description}
-                        </p>
+                         <div className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
+                                                      {selectedBlog.description
+                                                        .split('\n\n') // Split into paragraphs
+                                                        .map((para, i) => (
+                                                          <p key={i} className="mb-3">
+                                                            {para.split('\n').map((line, j, arr) => (
+                                                              <React.Fragment key={j}>
+                                                                {line}
+                                                                {j !== arr.length - 1 && <br />}
+                                                              </React.Fragment>
+                                                            ))}
+                                                          </p>
+                                                        ))}
+                                                    </div>
 
                       </div>
 

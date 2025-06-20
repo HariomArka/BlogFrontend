@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { Eye, EyeOff, User, Lock, Mail, ArrowRight, Sparkles } from 'lucide-react';
 import axios from 'axios';
 
 const Login = () => {
+   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isAnimated, setIsAnimated] = useState(false);
@@ -35,26 +38,25 @@ const Login = () => {
       const res = await axios.post(
         `/api/auth/login`,
         {
-          email: formData.email,
+          username: formData.username,
           password: formData.password
         }
       );
 
       // Store token and user info in localStorage
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify({ email: res.data.email }));
+      localStorage.setItem('user', JSON.stringify({ username: res.data.username }));
 
-      alert('Login successful!');
-      setFormData({ email: '', password: '' })
+      toast.success('Logged in successfully!');
+      setFormData({ username: '', password: '' })
 
-      console.log(res)
       setIsLoggedIn(true);
-      setUsername(res.data.name || res.data.email);
-      // redirect if needed, e.g.:
-      // navigate('/dashboard');
+      setUsername(res.data.name || res.data.username);
+
+      navigate('/', { replace: true });
     } catch (err) {
-      console.error('Login error:', err);
-      alert(err.response?.data?.error || 'Login failed');
+      
+      toast.error(err.response?.data?.error || 'Login failed');
     } finally {
       setIsLoading(false);
     }
@@ -150,11 +152,11 @@ const Login = () => {
 
                     <input
                       type="text"
-                      name="email"
-                      value={formData.email}
+                      name="username"
+                      value={formData.username}
                       onChange={handleInputChange}
                       className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 backdrop-blur-sm"
-                      placeholder="Username or Email"
+                      placeholder="Username"
                       required
                     />
 

@@ -88,7 +88,6 @@ const handleLike = async (e) => {
 
   return (
     <>
-      {/* Blog Card */}
       <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 max-w-sm mx-auto overflow-hidden transform hover:-translate-y-2 group">
         <div className="relative overflow-hidden">
           <img
