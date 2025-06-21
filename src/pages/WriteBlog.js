@@ -80,7 +80,7 @@ const WriteBlog = () => {
         username: formData.username.trim()
       };
 
-      const response = await fetch('/api/blogs', {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

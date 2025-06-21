@@ -76,10 +76,10 @@ const Contact = () => {
     }
 
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
       });
 
       const data = await res.json();
@@ -232,9 +232,9 @@ const Contact = () => {
                 className="flex justify-center space-x-6"
               >
                 {[
-                  { name: 'LinkedIn', color: 'from-blue-600 to-blue-700', icon: './Linkedin.svg', link:'https://www.linkedin.com/in/arka-ghosh-2729b529a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
-                  { name: 'Instagram', color: 'from-pink-500 to-purple-600', icon: './Insta.svg',link:'https://www.instagram.com/arkaghosh10007?igsh=cnhvOGd2N2Vpazln' },
-                  { name: 'Facebook', color: 'from-blue-500 to-blue-600', icon: './Facebook.svg',link:'https://www.facebook.com/share/1DvvUmbNCh/' }
+                  { name: 'LinkedIn', color: 'from-blue-600 to-blue-700', icon: './Linkedin.svg', link: 'https://www.linkedin.com/in/arka-ghosh-2729b529a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
+                  { name: 'Instagram', color: 'from-pink-500 to-purple-600', icon: './Insta.svg', link: 'https://www.instagram.com/arkaghosh10007?igsh=cnhvOGd2N2Vpazln' },
+                  { name: 'Facebook', color: 'from-blue-500 to-blue-600', icon: './Facebook.svg', link: 'https://www.facebook.com/share/1DvvUmbNCh/' }
                 ].map((social, index) => (
                   <a
                     key={index}

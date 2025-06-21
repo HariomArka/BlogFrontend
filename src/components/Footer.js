@@ -56,34 +56,6 @@ const { userCount,blogCount,writerCount } = useAuth();
               </div>
             </div>
 
-            {/* Navigation Links */}
-            {/* <div className="group">
-              <h3 className="text-2xl font-semibold mb-6 bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
-                Quick Links
-              </h3>
-              <ul className="space-y-4">
-                {[
-                  { href: "/", text: "Home", icon: "🏠" },
-                  { href: "/about", text: "About", icon: "ℹ️" },
-                  { href: "/writeblog", text: "Write Your Blog", icon: "✍️" },
-                  { href: "/myblogs", text: "My Blogs", icon: "❤️" },
-                  { href: "/contact", text: "Contact Us", icon: "📧" }
-                ].map((link, index) => (
-                  <li key={index} className="transform transition-all duration-300 hover:translate-x-2">
-                    <Link
-                      to={link.href}
-                      className="flex items-center space-x-3 text-gray-300 hover:text-white group/link transition-all duration-300 hover:bg-white/5 rounded-lg p-2 -ml-2"
-                    >
-                      <span className="text-lg group-hover/link:animate-bounce">{link.icon}</span>
-                      <span className="group-hover/link:bg-gradient-to-r group-hover/link:from-blue-400 group-hover/link:to-purple-400 group-hover/link:bg-clip-text group-hover/link:text-transparent font-medium">
-                        {link.text}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div> */}
-            {/* Navigation Links */}
 <div className="group">
   <h3 className="text-2xl font-semibold mb-6 bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
     Quick Links
@@ -188,17 +160,7 @@ const { userCount,blogCount,writerCount } = useAuth();
               <div className="text-gray-400 text-sm mb-4 md:mb-0">
                 <p>&copy; {new Date().getFullYear()} BlogSphere. All rights reserved.</p>
               </div>
-              {/* <div className="flex space-x-6 text-sm text-gray-400">
-                <a href="/privacy" className="hover:text-white transition-colors duration-300 hover:underline">
-                  Privacy Policy
-                </a>
-                <a href="/terms" className="hover:text-white transition-colors duration-300 hover:underline">
-                  Terms of Service
-                </a>
-                <a href="/cookies" className="hover:text-white transition-colors duration-300 hover:underline">
-                  Cookie Policy
-                </a>
-              </div> */}
+              
             </div>
           </div>
         </div>

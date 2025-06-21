@@ -97,7 +97,7 @@ const Register = () => {
     setIsLoading(true);
     try {
       // ② hit the Express route
-      const res = await axios.post(`/api/auth/register`,
+      const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/auth/register`,
         {
           email: formData.email,
           password: formData.password,

@@ -46,7 +46,7 @@ const handleLike = async (e) => {
 
   try {
     //console.log(_id);
-    const response = await fetch(`/api/blogs/${_id}/like`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs/${_id}/like`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

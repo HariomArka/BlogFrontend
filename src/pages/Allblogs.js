@@ -33,7 +33,7 @@ const Allblogs = () => {
   useEffect(() => {
 
     const fetchBlogs = async () => {
-      const response = await fetch('/api/blogs')
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs`);
       const json = await response.json()
 
       if (response.ok) {
@@ -73,7 +73,7 @@ const Allblogs = () => {
     setIsLiking(true);
 
     try {
-      const response = await fetch(`/api/blogs/${blogId}/like`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs/${blogId}/like`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const Allblogs = () => {
     setIsSubmittingComment(true);
 
     try {
-      const response = await fetch(`api/blogs/${blogId}/comment`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs/${blogId}/comment`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

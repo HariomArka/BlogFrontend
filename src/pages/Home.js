@@ -10,7 +10,7 @@ const Home = () => {
   const [visibleBlogs, setVisibleBlogs] = useState(6);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [isLiking, setIsLiking] = useState(false);
-  const { userCount,setuserCount,blogCount,setblogCount,writerCount,setwriterCount } = useAuth();
+  const { userCount, setuserCount, blogCount, setblogCount, writerCount, setwriterCount } = useAuth();
 
   // Add these state variables to your existing useState declarations
   const [showCommentForm, setShowCommentForm] = useState(false);
@@ -34,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const response = await fetch('/api/blogs');
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs`);
       const json = await response.json();
 
       if (response.ok) {
@@ -42,7 +42,7 @@ const Home = () => {
         setblogCount(json.length)
         // Count unique usernames
         const uniqueUsernames = new Set(json.map(blog => blog.username));
-        
+
         setwriterCount(uniqueUsernames.size)
       }
     };
@@ -51,16 +51,16 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-  const fetchUsernumber = async () => {
-    const response = await fetch('/api/auth/totalusers');
-    const json = await response.json();
-    if (response.ok) {
-     setuserCount(''+json.totalUsers); // ✅ store count properly
-    }
-  };
+    const fetchUsernumber = async () => {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/totalusers`);
+      const json = await response.json();
+      if (response.ok) {
+        setuserCount('' + json.totalUsers);
+      }
+    };
 
-  fetchUsernumber();
-}, []);
+    fetchUsernumber();
+  }, []);
 
   const FloatingShape = ({ delay, size, position }) => (
     <div
@@ -89,7 +89,7 @@ const Home = () => {
     setIsLiking(true);
 
     try {
-      const response = await fetch(`/api/blogs/${blogId}/like`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs/${blogId}/like`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -104,12 +104,12 @@ const Home = () => {
         //console.error('Blog not found or invalid ID:', errorData.error);
       } else if (response.status === 500) {
         const errorData = await response.json();
-       // console.error('Server error:', errorData.error);
+        // console.error('Server error:', errorData.error);
       } else {
         //console.error('Failed to update likes. Status:', response.status);
       }
     } catch (error) {
-     // console.error('Network error updating likes:', error);
+      // console.error('Network error updating likes:', error);
     } finally {
       setIsLiking(false);
     }
@@ -125,7 +125,7 @@ const Home = () => {
     setIsSubmittingComment(true);
 
     try {
-      const response = await fetch(`api/blogs/${blogId}/comment`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs/${blogId}/comment`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -243,7 +243,7 @@ const Home = () => {
                 <div className="text-sm text-white/60">Writers</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-1">{blogs ? blogCount: ''}+</div>
+                <div className="text-3xl font-bold text-white mb-1">{blogs ? blogCount : ''}+</div>
                 <div className="text-sm text-white/60">Stories</div>
               </div>
               <div className="text-center">
@@ -501,7 +501,7 @@ const Home = () => {
                         </div>
                       </div>
 
-                      
+
                     </div>
 
                     {/* Article Content */}
