@@ -36,8 +36,6 @@ const Allblogs = () => {
       const response = await fetch('/api/blogs')
       const json = await response.json()
 
-      //console.log(json)
-
       if (response.ok) {
         setBlogs(json)
       }
@@ -87,15 +85,15 @@ const Allblogs = () => {
         //setLikes(updatedBlog.likes);
       } else if (response.status === 404) {
         const errorData = await response.json();
-        console.error('Blog not found or invalid ID:', errorData.error);
+        //console.error('Blog not found or invalid ID:', errorData.error);
       } else if (response.status === 500) {
         const errorData = await response.json();
-        console.error('Server error:', errorData.error);
+        //console.error('Server error:', errorData.error);
       } else {
-        console.error('Failed to update likes. Status:', response.status);
+       // console.error('Failed to update likes. Status:', response.status);
       }
     } catch (error) {
-      console.error('Network error updating likes:', error);
+      //console.error('Network error updating likes:', error);
     } finally {
       setIsLiking(false);
     }
@@ -108,9 +106,6 @@ const Allblogs = () => {
     if (!commentText.trim() || !selectedBlog || isSubmittingComment) return;
 
     setShowCommentForm(false)
-
-    console.log(commentText, blogId);
-
     setIsSubmittingComment(true);
 
     try {
@@ -140,14 +135,12 @@ const Allblogs = () => {
         // Reset form
         setCommentText('');
         setShowCommentForm(false);
-
-        console.log('Comment added successfully');
       } else {
         const errorData = await response.json();
-        console.error('Failed to add comment:', errorData.error);
+        //console.error('Failed to add comment:', errorData.error);
       }
     } catch (error) {
-      console.error('Network error adding comment:', error);
+      //console.error('Network error adding comment:', error);
     } finally {
       setIsSubmittingComment(false);
     }
@@ -230,7 +223,6 @@ const Allblogs = () => {
                       timestamp={post.timestamps}
                       onReadMore={() => {
                         setSelectedBlog(post)
-                        console.log(post)
                       }}
                     />
 

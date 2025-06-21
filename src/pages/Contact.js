@@ -185,7 +185,7 @@ const Contact = () => {
                       <p className="text-gray-300">Come say hello at our office</p>
                     </div>
                   </div>
-                  <p className="text-gray-300 text-lg">Kharagpur, West Bengal 721302</p>
+                  <p className="text-gray-300 text-lg">Nehru hall of Residance, IIT Kharagpur, Kharagpur, West Bengal 721302</p>
                 </div>
               </motion.div>
 
@@ -204,7 +204,7 @@ const Contact = () => {
                       </svg>
                     </div>
                     <h4 className="text-lg font-semibold text-white mb-2">Email Us</h4>
-                    <p className="text-gray-300 break-all">helpdesk@blogsphere.com</p>
+                    <p className="text-gray-300 break-all">blogspherehelpdesk@gmail.com</p>
                   </div>
                 </motion.div>
 
@@ -221,7 +221,7 @@ const Contact = () => {
                       </svg>
                     </div>
                     <h4 className="text-lg font-semibold text-white mb-2">Call Us</h4>
-                    <p className="text-gray-300">+91 79807 64720</p>
+                    <p className="text-gray-300">+91 98324 16501</p>
                   </div>
                 </motion.div>
               </div>
@@ -232,13 +232,14 @@ const Contact = () => {
                 className="flex justify-center space-x-6"
               >
                 {[
-                  { name: 'LinkedIn', color: 'from-blue-600 to-blue-700', icon: './Linkedin.svg' },
-                  { name: 'Instagram', color: 'from-pink-500 to-purple-600', icon: './Insta.svg' },
-                  { name: 'Facebook', color: 'from-blue-500 to-blue-600', icon: './Facebook.svg' }
+                  { name: 'LinkedIn', color: 'from-blue-600 to-blue-700', icon: './Linkedin.svg', link:'https://www.linkedin.com/in/arka-ghosh-2729b529a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
+                  { name: 'Instagram', color: 'from-pink-500 to-purple-600', icon: './Insta.svg',link:'https://www.instagram.com/arkaghosh10007?igsh=cnhvOGd2N2Vpazln' },
+                  { name: 'Facebook', color: 'from-blue-500 to-blue-600', icon: './Facebook.svg',link:'https://www.facebook.com/share/1DvvUmbNCh/' }
                 ].map((social, index) => (
                   <a
                     key={index}
-                    href="#"
+                    target='blank'
+                    href={social.link}
                     className={`group relative w-14 h-14 bg-gradient-to-br ${social.color} rounded-2xl flex items-center justify-center hover:scale-110 hover:rotate-6 transition-all duration-300 shadow-lg hover:shadow-xl`}
                   >
                     <img

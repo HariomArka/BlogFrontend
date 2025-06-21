@@ -45,7 +45,7 @@ const handleLike = async (e) => {
   setIsLiking(true);
 
   try {
-    console.log(_id);
+    //console.log(_id);
     const response = await fetch(`/api/blogs/${_id}/like`, {
       method: 'PATCH',
       headers: {
@@ -60,20 +60,20 @@ const handleLike = async (e) => {
     } else if (response.status === 404) {
       // Handle invalid ID or blog not found
       const errorData = await response.json();
-      console.error('Blog not found or invalid ID:', errorData.error);
+      //console.error('Blog not found or invalid ID:', errorData.error);
       // Optionally show user feedback here
     } else if (response.status === 500) {
       // Handle server errors
       const errorData = await response.json();
-      console.error('Server error:', errorData.error);
+      //console.error('Server error:', errorData.error);
       // Optionally show user feedback here
     } else {
       // Handle other HTTP errors
-      console.error('Failed to update likes. Status:', response.status);
+      //console.error('Failed to update likes. Status:', response.status);
     }
   } catch (error) {
     // Handle network errors or other exceptions
-    console.error('Network error updating likes:', error);
+    //console.error('Network error updating likes:', error);
     // Optionally show user feedback here
   } finally {
     setIsLiking(false);

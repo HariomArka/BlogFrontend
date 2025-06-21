@@ -47,6 +47,7 @@ const Login = () => {
       // Store token and user info in localStorage
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify({ username: res.data.username }));
+      console.log(res.data.username,typeof(res.data.username))
 
       toast.success('Logged in successfully!');
       setFormData({ username: '', password: '' })

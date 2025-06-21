@@ -6,6 +6,7 @@ import {
 import { useAuth } from '../context/AuthContext'; // adjust path as needed
 import Blogcard from '../components/Blogcard';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const MyBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -29,14 +30,14 @@ const MyBlogs = () => {
   const fetchBlogs = async () => {
     setLoading(true);
     try {
-      console.log('Current user from context:', currentUser);
+      //console.log('Current user from context:', currentUser);
 
       const res = await fetch(`/api/blogs/username/${currentUser}`);
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       setBlogs(data);
     } catch (error) {
-      console.error('Error fetching blogs:', error);
+      toast.error('Error fetching blogs:', error);
     } finally {
       setLoading(false);
     }
@@ -89,7 +90,7 @@ const MyBlogs = () => {
       }
       toast.success('Blog deleted successfully!')
     } catch (error) {
-      console.error('Error deleting blog:', error);
+      //console.error('Error deleting blog:', error);
       toast.error('Error deleting blog. Please try again.')
     }
   };
@@ -126,7 +127,7 @@ const MyBlogs = () => {
           </div>
 
 
-          {(blogs.length == 0) && (
+          {(blogs.length == 0 && currentUser == null) && (
             <div className="">
 
               {/* Animated background elements */}
@@ -204,6 +205,118 @@ const MyBlogs = () => {
             </div>
           )}
 
+
+
+          {(blogs.length == 0 && currentUser != null) && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="flex flex-col items-center justify-center min-h-[60vh] px-6"
+            >
+              {/* Static Container */}
+              <div className="text-center mb-8">
+                {/* Large Inspirational Icon */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.6, type: "spring", bounce: 0.4 }}
+                  className="text-5xl mb-6"
+                >
+                  ✨
+
+
+                  {/* Main Message */}
+                  <motion.h2
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 bg-clip-text text-transparent mb-4 leading-tight"
+                  >
+                    Your Journey Begins Here
+                  </motion.h2>
+
+                  {/* Sub Message */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7, duration: 0.8 }}
+                    className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+                  >
+                    You are about to start inspiring the world through your
+                    <span className="text-indigo-600 font-semibold"> pen and thoughts</span>.
+                    Every great writer started with a single word.
+                  </motion.p>
+
+                </motion.div>
+
+                {/* Call to Action Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2, duration: 0.8 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link
+                    to="/writeblog"
+                    className="group relative inline-flex items-center px-12 py-5 bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800 text-white font-bold text-xl rounded-full shadow-2xl hover:shadow-indigo-500/25 transition-all duration-500 no-underline overflow-hidden"
+                  >
+                    {/* Animated Background */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      initial={false}
+                    />
+
+                    {/* Button Content */}
+                    <motion.span
+                      className="relative flex items-center space-x-3"
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400 }}
+                    >
+                      <span>Write Your First Blog</span>
+                      <motion.span
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className="text-2xl"
+                      >
+                        ✍️
+                      </motion.span>
+                    </motion.span>
+
+                    {/* Shimmer Effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100"
+                      animate={{ x: [-100, 400] }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatDelay: 2,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  </Link>
+
+                </motion.div>
+
+                {/* Motivational Quote */}
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.5, duration: 1 }}
+                  className="text-gray-500 italic text-center mt-8 max-w-md"
+                >
+                  "The secret to getting ahead is getting started." - Mark Twain
+                </motion.p>
+              </div>
+            </motion.div>
+          )}
+
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
             {blogs && blogs.map((post, index) => (
               <div
@@ -226,7 +339,6 @@ const MyBlogs = () => {
                       onReadMore={() => {
                         setSelectedBlog(post)
                         setShowDetailModal(true)
-                        console.log(post)
                       }}
                     />
 
@@ -756,7 +868,7 @@ const MyBlogs = () => {
         }
       `}</style>
       </div>
-    </div>
+    </div >
   );
 };
 

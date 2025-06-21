@@ -44,7 +44,6 @@ const Home = () => {
         const uniqueUsernames = new Set(json.map(blog => blog.username));
         
         setwriterCount(uniqueUsernames.size)
-        console.log('Total Unique Users:', uniqueUsernames.size);
       }
     };
 
@@ -55,7 +54,6 @@ const Home = () => {
   const fetchUsernumber = async () => {
     const response = await fetch('/api/auth/totalusers');
     const json = await response.json();
-console.log(json)
     if (response.ok) {
      setuserCount(''+json.totalUsers); // ✅ store count properly
     }
@@ -103,15 +101,15 @@ console.log(json)
         //setLikes(updatedBlog.likes);
       } else if (response.status === 404) {
         const errorData = await response.json();
-        console.error('Blog not found or invalid ID:', errorData.error);
+        //console.error('Blog not found or invalid ID:', errorData.error);
       } else if (response.status === 500) {
         const errorData = await response.json();
-        console.error('Server error:', errorData.error);
+       // console.error('Server error:', errorData.error);
       } else {
-        console.error('Failed to update likes. Status:', response.status);
+        //console.error('Failed to update likes. Status:', response.status);
       }
     } catch (error) {
-      console.error('Network error updating likes:', error);
+     // console.error('Network error updating likes:', error);
     } finally {
       setIsLiking(false);
     }
@@ -124,9 +122,6 @@ console.log(json)
     if (!commentText.trim() || !selectedBlog || isSubmittingComment) return;
 
     setShowCommentForm(false)
-
-    console.log(commentText, blogId);
-
     setIsSubmittingComment(true);
 
     try {
@@ -157,13 +152,13 @@ console.log(json)
         setCommentText('');
         setShowCommentForm(false);
 
-        console.log('Comment added successfully');
+        //console.log('Comment added successfully');
       } else {
         const errorData = await response.json();
-        console.error('Failed to add comment:', errorData.error);
+        //console.error('Failed to add comment:', errorData.error);
       }
     } catch (error) {
-      console.error('Network error adding comment:', error);
+      //console.error('Network error adding comment:', error);
     } finally {
       setIsSubmittingComment(false);
     }
@@ -337,7 +332,6 @@ console.log(json)
                       timestamp={post.timestamps}
                       onReadMore={() => {
                         setSelectedBlog(post)
-                        console.log(post)
                       }}
                     />
 

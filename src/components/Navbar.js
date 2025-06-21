@@ -40,28 +40,6 @@ const Navbar = () => {
       </button>
 
       {/* Avatar Dropdown Menu */}
-      {/* {isAvatarMenuOpen && (
-        <div 
-          className={`absolute ${isMobile ? 'left-1/2 transform -translate-x-1/2' : 'right-0'
-            } mt-3 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 py-2 z-50 transition-all duration-300 ease-in-out transform ${isAvatarMenuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
-            }`}
-        >
-          <div className="px-4 py-3 border-b border-gray-100" onClick={()=>setIsAvatarMenuOpen(false)}>
-            <p className="text-sm font-semibold text-gray-900 truncate">{username}</p>
-            <p className="text-xs text-gray-500 mt-1">Welcome back!</p>
-          </div>
-
-          <div className="py-1">
-            <a
-              href="/" onClick={()=>setIsAvatarMenuOpen(false)}
-              className="block px-4 py-2.5 text-sm text-red-600 font-medium hover:bg-red-50 hover:text-red-700 transition-colors duration-200 focus:outline-none focus:bg-red-50"
-            >
-              Logout
-            </a>
-          </div>
-        </div>
-      )} */}
-
       {isAvatarMenuOpen && (
         <div
           className={`absolute ${isMobile ? 'left-1/2 transform -translate-x-1/2' : 'right-0'
@@ -216,10 +194,11 @@ const Navbar = () => {
       </div >
 
       {/* Mobile Menu */}
-      < div
-        className={`md:hidden bg-gradient-to-b from-indigo-600 to-purple-700 shadow-2xl transition-all duration-500 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+      <div
+        className={`md:hidden bg-gradient-to-b from-indigo-600 to-purple-700 shadow-2xl transition-all duration-500 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
       >
+
         <div className="px-4 pt-2 pb-6 space-y-4">
           <div className="flex flex-col space-y-4 text-white font-semibold text-base">
             <NavLink to="/" onClick={closeMenu} isMobile>Home</NavLink>

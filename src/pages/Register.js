@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Eye, EyeOff, User, Lock, Mail, ArrowRight, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const Register = () => {
@@ -298,25 +299,6 @@ const Register = () => {
                     </div>
                   </div>
 
-                  {/* Terms & Conditions */}
-                  <div className="flex items-start space-x-3">
-                    <input
-                      type="checkbox"
-                      className="w-5 h-5 mt-0.5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 bg-white/10 border-white/20"
-                      required
-                    />
-                    <p className="text-sm text-gray-300 leading-relaxed">
-                      I agree to the{' '}
-                      <a href="#" className="text-emerald-400 hover:text-emerald-300 underline transition-colors duration-300">
-                        Terms of Service
-                      </a>{' '}
-                      and{' '}
-                      <a href="#" className="text-emerald-400 hover:text-emerald-300 underline transition-colors duration-300">
-                        Privacy Policy
-                      </a>
-                    </p>
-                  </div>
-
                   {/* Register Button */}
                   <button
                     type="submit"              // swap from "button"
@@ -341,9 +323,9 @@ const Register = () => {
                   <div className="text-center">
                     <p className="text-gray-300">
                       Already have an account?{' '}
-                      <a href="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors duration-300 hover:underline">
+                      <Link to="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors duration-300 hover:underline">
                         Sign in here
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </div>
@@ -389,11 +371,7 @@ const Register = () => {
       </div>
 
       {/* Floating Help Button */}
-      <div className="absolute bottom-8 right-8">
-        <div className="w-14 h-14 bg-gradient-to-r from-emerald-500 to-teal-500 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:scale-110 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl">
-          <span className="text-white text-xl font-bold">?</span>
-        </div>
-      </div>
+      
     </div>
   );
 };

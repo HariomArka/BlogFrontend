@@ -80,8 +80,6 @@ const WriteBlog = () => {
         username: formData.username.trim()
       };
 
-      console.log('Sending blog data:', blogData);
-
       const response = await fetch('/api/blogs', {
         method: 'POST',
         headers: {
