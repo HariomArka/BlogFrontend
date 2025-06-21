@@ -1,9 +1,10 @@
-import React, { useState} from 'react';
-import { useAuth } from '../context/AuthContext'; 
+import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const WriteBlog = () => {
-  const {isLoggedIn} = useAuth();
+  const { isLoggedIn } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -20,13 +21,11 @@ const WriteBlog = () => {
     username: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: '' }));
-    setSubmitMessage(''); // Clear any previous messages
   };
 
   const validateForm = () => {
@@ -69,7 +68,6 @@ const WriteBlog = () => {
     }
 
     setIsSubmitting(true);
-    setSubmitMessage('');
 
     try {
       // Prepare data for API (matching your backend schema exactly)
@@ -95,7 +93,7 @@ const WriteBlog = () => {
       const result = await response.json();
 
       if (response.ok) {
-        setSubmitMessage('Blog published successfully! 🎉');
+        toast.success('Blog published successfully! 🎉')
         setFormData({
           title: '',
           author: '',
@@ -104,14 +102,11 @@ const WriteBlog = () => {
           username: '',
           choice: 'public',
         });
-        console.log('Blog created:', result);
       } else {
-        setSubmitMessage(`Error: ${result.error || 'Failed to publish blog'}`);
-        console.error('Error response:', result);
+        toast.error(`Error: ${result.error || 'Failed to publish blog'}`);
       }
     } catch (error) {
-      console.error('Network error:', error);
-      setSubmitMessage('Network error: Unable to publish blog. Please try again.');
+      toast.error('Network error: Unable to publish blog. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -158,22 +153,22 @@ const WriteBlog = () => {
 
             {/* Subtitle with typewriter effect simulation */}
             <p className="text-xl text-gray-200 mb-12 opacity-90 animate-bounce delay-500">
-            Please{' '}
-            <Link 
-              to="/login" 
-              className="text-purple-300 hover:text-pink-300 underline decoration-2 underline-offset-4 decoration-purple-400 hover:decoration-pink-400 transition-all duration-300 font-semibold"
-            >
-              Login
-            </Link>
-            {' '}or{' '}
-            <Link 
-              to="/register" 
-              className="text-blue-300 hover:text-cyan-300 underline decoration-2 underline-offset-4 decoration-blue-400 hover:decoration-cyan-400 transition-all duration-300 font-semibold"
-            >
-              Register
-            </Link>
-            {' '}to start writing your blog
-          </p>
+              Please{' '}
+              <Link
+                to="/login"
+                className="text-purple-300 hover:text-pink-300 underline decoration-2 underline-offset-4 decoration-purple-400 hover:decoration-pink-400 transition-all duration-300 font-semibold"
+              >
+                Login
+              </Link>
+              {' '}or{' '}
+              <Link
+                to="/register"
+                className="text-blue-300 hover:text-cyan-300 underline decoration-2 underline-offset-4 decoration-blue-400 hover:decoration-cyan-400 transition-all duration-300 font-semibold"
+              >
+                Register
+              </Link>
+              {' '}to start writing your blog
+            </p>
 
             {/* Animated buttons */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -219,10 +214,11 @@ const WriteBlog = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Animated background with floating elements */}
-      <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <div className="absolute top-10 left-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-20 right-10 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse [animation-delay:2s]"></div>
-        <div className="absolute -bottom-8 left-20 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse [animation-delay:4s]"></div>
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+
+        <div className="absolute top-10 left-10 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
+        <div className="absolute top-20 right-10 w-64 h-64 bg-sky-700 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse [animation-delay:2s]"></div>
+        <div className="absolute -bottom-8 left-20 w-80 h-80 bg-indigo-700 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse [animation-delay:4s]"></div>
 
         {/* Floating particles */}
         {[...Array(8)].map((_, i) => (
@@ -242,7 +238,7 @@ const WriteBlog = () => {
       <div className="relative z-10 text-gray-900 min-h-screen p-4 sm:p-8 mt-[60px] sm:mt-0">
         {/* Animated header */}
         <div className="text-center mb-12 transform transition-all duration-700 hover:scale-105">
-          <h2 className="text-5xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 mb-4 font-sans tracking-tight animate-pulse">
+          <h2 className="text-5xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 mb-4 font-sans tracking-tight animate-pulse">
             Write Your <span className="relative">
               Blog
               <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full transform origin-left animate-pulse"></div>
@@ -255,7 +251,7 @@ const WriteBlog = () => {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          <div className="bg-white/80 backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-white/30 transition-all duration-700 hover:shadow-3xl hover:bg-white/90 relative overflow-hidden transform hover:scale-[1.02]">
+          <div className="bg-slate-800/90 backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700/50 transition-all duration-700 hover:shadow-3xl hover:bg-slate-800/95 relative overflow-hidden transform hover:scale-[1.02]">
 
             {/* Animated border glow */}
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 rounded-2xl opacity-20 blur-lg animate-pulse pointer-events-none"></div>
@@ -266,27 +262,11 @@ const WriteBlog = () => {
             <div className="absolute top-6 right-20 w-1 h-1 bg-blue-400 rounded-full animate-ping [animation-delay:2s]"></div>
 
             <div className="relative z-10">
-              {/* Submit Message with enhanced animation */}
-              {submitMessage && (
-                <div className={`mb-6 p-4 rounded-xl transform transition-all duration-500 scale-100 ${submitMessage.includes('successfully')
-                  ? 'bg-gradient-to-r from-green-100 to-emerald-100 border border-green-400 text-green-700 shadow-lg'
-                  : 'bg-gradient-to-r from-red-100 to-pink-100 border border-red-400 text-red-700 shadow-lg'
-                  }`}>
-                  <div className="flex items-center">
-                    {submitMessage.includes('successfully') ? (
-                      <div className="mr-2 text-green-500 animate-bounce">✅</div>
-                    ) : (
-                      <div className="mr-2 text-red-500 animate-pulse">❌</div>
-                    )}
-                    {submitMessage}
-                  </div>
-                </div>
-              )}
 
               <div className="flex flex-col gap-6">
                 {/* Title Input with enhanced styling */}
                 <div className="group transform transition-all duration-300 hover:scale-105">
-                  <label htmlFor="title" className="block text-gray-700 font-semibold mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                  <label htmlFor="title" className="block text-slate-200 font-semibold mb-2 group-hover:text-blue-600 transition-colors duration-300">
                     Blog Title *
                   </label>
                   <div className="relative">
@@ -297,7 +277,7 @@ const WriteBlog = () => {
                       value={formData.title}
                       onChange={handleChange}
                       placeholder="Enter your blog title"
-                      className="w-full p-4 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-900 rounded-xl border-2 border-blue-200 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:border-blue-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
+                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-slate-600 text-gray-900 rounded-xl border-2 border-blue-200 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:border-blue-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
                       disabled={isSubmitting}
                     />
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -307,7 +287,7 @@ const WriteBlog = () => {
 
                 {/* Author Input */}
                 <div className="group transform transition-all duration-300 hover:scale-105">
-                  <label htmlFor="author" className="block text-gray-700 font-semibold mb-2 group-hover:text-purple-600 transition-colors duration-300">
+                  <label htmlFor="author" className="block text-slate-200 font-semibold mb-2 group-hover:text-purple-600 transition-colors duration-300">
                     Author Name *
                   </label>
                   <div className="relative">
@@ -318,7 +298,7 @@ const WriteBlog = () => {
                       value={formData.author}
                       onChange={handleChange}
                       placeholder="Enter author name"
-                      className="w-full p-4 bg-gradient-to-r from-purple-50 to-pink-50 text-gray-900 rounded-xl border-2 border-purple-200 focus:outline-none focus:ring-4 focus:ring-purple-300/50 focus:border-purple-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
+                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-blue-800 text-gray-900 rounded-xl border-2 border-purple-200 focus:outline-none focus:ring-4 focus:ring-purple-300/50 focus:border-purple-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
                       disabled={isSubmitting}
                     />
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -328,7 +308,7 @@ const WriteBlog = () => {
 
                 {/* Username Input */}
                 <div className="group transform transition-all duration-300 hover:scale-105">
-                  <label htmlFor="author" className="block text-gray-700 font-semibold mb-2 group-hover:text-emerald-600 transition-colors duration-300">
+                  <label htmlFor="author" className="block text-slate-200 font-semibold mb-2 group-hover:text-emerald-600 transition-colors duration-300">
                     Username *
                   </label>
                   <div className="relative">
@@ -339,7 +319,7 @@ const WriteBlog = () => {
                       value={formData.username}
                       onChange={handleChange}
                       placeholder="Enter your username"
-                      className="w-full p-4 bg-gradient-to-r from-emerald-50 to-teal-50 text-gray-900 rounded-xl border-2 border-emerald-200 focus:outline-none focus:ring-4 focus:ring-emerald-300/50 focus:border-emerald-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg resize-none"
+                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-sky-800 text-gray-900 rounded-xl border-2 border-emerald-200 focus:outline-none focus:ring-4 focus:ring-emerald-300/50 focus:border-emerald-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg resize-none"
                       disabled={isSubmitting}
                     />
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/20 to-teal-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -349,7 +329,7 @@ const WriteBlog = () => {
 
                 {/* Image URL Input */}
                 <div className="group transform transition-all duration-300 hover:scale-105">
-                  <label htmlFor="image" className="block text-gray-700 font-semibold mb-2 group-hover:text-indigo-600 transition-colors duration-300">
+                  <label htmlFor="image" className="block text-slate-200 font-semibold mb-2 group-hover:text-indigo-600 transition-colors duration-300">
                     Image URL *
                   </label>
                   <div className="relative">
@@ -360,7 +340,7 @@ const WriteBlog = () => {
                       value={formData.image}
                       onChange={handleChange}
                       placeholder="Paste image URL (jpg, png, gif, webp)"
-                      className="w-full p-4 bg-gradient-to-r from-indigo-50 to-blue-50 text-gray-900 rounded-xl border-2 border-indigo-200 focus:outline-none focus:ring-4 focus:ring-indigo-300/50 focus:border-indigo-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
+                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-indigo-800text-gray-900 rounded-xl border-2 border-indigo-200 focus:outline-none focus:ring-4 focus:ring-indigo-300/50 focus:border-indigo-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
                       disabled={isSubmitting}
                     />
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-400/20 to-blue-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -370,7 +350,7 @@ const WriteBlog = () => {
 
                 {/* Blog Description Textarea */}
                 <div className="group transform transition-all duration-300 hover:scale-105">
-                  <label htmlFor="description" className="block text-gray-700 font-semibold mb-2 group-hover:text-emerald-600 transition-colors duration-300">
+                  <label htmlFor="description" className="block text-slate-200 font-semibold mb-2 group-hover:text-emerald-600 transition-colors duration-300">
                     Blog Description *
                   </label>
                   <div className="relative">
@@ -381,7 +361,7 @@ const WriteBlog = () => {
                       onChange={handleChange}
                       placeholder="Write your blog description here..."
                       rows={5}
-                      className="w-full p-4 bg-gradient-to-r from-emerald-50 to-teal-50 text-gray-900 rounded-xl border-2 border-emerald-200 focus:outline-none focus:ring-4 focus:ring-emerald-300/50 focus:border-emerald-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg resize-none"
+                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-sky-800 text-gray-900 rounded-xl border-2 border-emerald-200 focus:outline-none focus:ring-4 focus:ring-emerald-300/50 focus:border-emerald-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg resize-none"
                       disabled={isSubmitting}
                     />
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/20 to-teal-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -391,7 +371,7 @@ const WriteBlog = () => {
 
                 {/* Choice Select */}
                 <div className="group transform transition-all duration-300 hover:scale-105">
-                  <label htmlFor="choice" className="block text-gray-700 font-semibold mb-2 group-hover:text-orange-600 transition-colors duration-300">
+                  <label htmlFor="choice" className="block text-slate-200 font-semibold mb-2 group-hover:text-orange-600 transition-colors duration-300" >
                     Privacy Choice
                   </label>
                   <div className="relative">
@@ -400,7 +380,7 @@ const WriteBlog = () => {
                       name="choice"
                       value={formData.choice}
                       onChange={handleChange}
-                      className="w-full p-4 bg-gradient-to-r from-orange-50 to-yellow-50 text-gray-900 rounded-xl border-2 border-orange-200 focus:outline-none focus:ring-4 focus:ring-orange-300/50 focus:border-orange-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg cursor-pointer"
+                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-slate-600text-gray-900 rounded-xl border-2 border-orange-200 focus:outline-none focus:ring-4 focus:ring-orange-300/50 focus:border-orange-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg cursor-pointer"
                       disabled={isSubmitting}
                     >
                       <option value="public">🌍 Public</option>
@@ -417,7 +397,7 @@ const WriteBlog = () => {
                   disabled={isSubmitting}
                   className={`group relative w-full p-4 rounded-xl font-bold text-lg mt-6 shadow-2xl transition-all duration-500 font-sans overflow-hidden ${isSubmitting
                     ? 'bg-gray-400 cursor-not-allowed transform scale-95'
-                    : 'bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 transform hover:scale-105 hover:shadow-3xl active:scale-95'
+                    : 'bg-gradient-to-r from-sky-700 via-blue-800 to-indigo-800 text-white hover:from-sky-800 hover:via-blue-900 hover:to-indigo-900 transform hover:scale-105 hover:shadow-3xl active:scale-95'
                     }`}
                 >
                   {/* Button background animation */}

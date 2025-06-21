@@ -1,147 +1,8 @@
-// 'use client';
-
-// import React, { useRef } from 'react';
-// import { motion, useInView } from 'framer-motion';
-
-// const Contact = () => {
-//   // Animation variants for components
-//   const componentVariants = {
-//     hidden: { opacity: 0, y: 50 },
-//     visible: {
-//       opacity: 1,
-//       y: 0,
-//       transition: { duration: 0.6, ease: 'easeOut' },
-//     },
-//   };
-
-//   // Refs and inView hooks for scroll-triggered animations
-//   const headerRef = useRef(null);
-//   const headerInView = useInView(headerRef, { once: true, amount: 0.3 });
-
-//   const contactInfoRef = useRef(null);
-//   const contactInfoInView = useInView(contactInfoRef, { once: true, amount: 0.3 });
-
-//   const formRef = useRef(null);
-//   const formInView = useInView(formRef, { once: true, amount: 0.3 });
-
-//   return (
-//     <div className="bg-gradient-to-b from-white to-blue-50 text-gray-900 min-h-screen p-4 sm:p-8 mt-[60px] sm:mt-0">
-//       <motion.h2
-//         ref={headerRef}
-//         initial="hidden"
-//         animate={headerInView ? 'visible' : 'hidden'}
-//         variants={componentVariants}
-//         className="text-4xl sm:text-5xl font-extrabold text-blue-900 text-center mb-8 font-['Inter',_Helvetica,_Arial,_sans-serif] tracking-tight"
-//       >
-//         Contact <span className="text-blue-600">Us</span>
-//       </motion.h2>
-
-//       <motion.div
-//         initial="hidden"
-//         animate={headerInView ? 'visible' : 'hidden'}
-//         variants={componentVariants}
-//         className="text-center text-gray-600 text-lg sm:text-xl mb-12 font-['Inter',_Helvetica,_Arial,_sans-serif] max-w-2xl mx-auto"
-//       >
-//         We're here to answer your questions and help you connect. Reach out to us anytime!
-//       </motion.div>
-
-//       <div className="flex flex-col md:flex-row justify-center gap-8 sm:gap-12 max-w-6xl mx-auto">
-//         {/* Contact Info Section */}
-//         <motion.div
-//           ref={contactInfoRef}
-//           initial="hidden"
-//           animate={contactInfoInView ? 'visible' : 'hidden'}
-//           variants={componentVariants}
-//           className="md:w-[40%] w-full flex flex-col gap-8"
-//         >
-//           {/* Address Card */}
-//           <div className="relative bg-white rounded-xl p-6 flex flex-col items-center border border-blue-200 shadow-md transition-all duration-500 hover:scale-105 hover:shadow-lg hover:border-blue-400 cursor-pointer">
-//             <img className="w-12 mb-4" src="/Map.svg" alt="Map Icon" />
-//             <div className="text-center">
-//               <p className="font-semibold text-lg text-blue-700">Our Address</p>
-//               <p className="text-gray-600">Kharagpur, West Bengal 721302</p>
-//             </div>
-//             {/* <div className="absolute top-2 right-2 text-blue-600 text-2xl font-bold font-['Inter',_Helvetica,_Arial,_sans-serif] opacity-20">
-//               ✉
-//             </div> */}
-//           </div>
-
-//           <div className="flex flex-col sm:flex-row gap-6">
-//             {/* Email Card */}
-//             <div className="relative bg-white rounded-xl p-6 flex flex-col items-center sm:w-1/2 border border-blue-200 shadow-md transition-all duration-500 hover:scale-105 hover:shadow-lg hover:border-blue-400 cursor-pointer">
-//               <img className="w-12 mb-4" src="/Mail.svg" alt="Email Icon" />
-//               <div className="text-center">
-//                 <p className="font-semibold text-lg text-blue-700">Email Us</p>
-//                 <p className="text-gray-600">helpdesk@blogsphere.com</p>
-//               </div>
-//               {/* <div className="absolute top-2 right-2 text-blue-600 text-2xl font-bold font-['Inter',_Helvetica,_Arial,_sans-serif] opacity-20">
-//                 ✉
-//               </div> */}
-//             </div>
-
-//             {/* Phone Card */}
-//             <div className="relative bg-white rounded-xl p-6 flex flex-col items-center sm:w-1/2 border border-blue-200 shadow-md transition-all duration-500 hover:scale-105 hover:shadow-lg hover:border-blue-400 cursor-pointer">
-//               <img className="w-12 mb-4" src="/Phone.svg" alt="Phone Icon" />
-//               <div className="text-center">
-//                 <p className="font-semibold text-lg text-blue-700">Phone Us</p>
-//                 <p className="text-gray-600">+91 79807 64720</p>
-//               </div>
-//               {/* <div className="absolute top-2 right-2 text-blue-600 text-2xl font-bold font-['Inter',_Helvetica,_Arial,_sans-serif] opacity-20">
-//                 ✉
-//               </div> */}
-//             </div>
-//           </div>
-//         </motion.div>
-
-//         {/* Contact Form */}
-//         <motion.div
-//           ref={formRef}
-//           initial="hidden"
-//           animate={formInView ? 'visible' : 'hidden'}
-//           variants={componentVariants}
-//           className="md:w-[50%] w-full bg-white p-6 sm:p-8 rounded-xl shadow-md border border-blue-200 transition-all duration-500 hover:shadow-lg hover:border-blue-400 relative"
-//         >
-//           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-//             <input
-//               type="text"
-//               placeholder="Your Name"
-//               className="w-full p-3 bg-blue-50 text-gray-900 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-md transition-all duration-300"
-//             />
-//             <input
-//               type="email"
-//               placeholder="Your Email"
-//               className="w-full p-3 bg-blue-50 text-gray-900 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-md transition-all duration-300"
-//             />
-//           </div>
-//           <input
-//             type="text"
-//             placeholder="Subject"
-//             className="w-full p-3 bg-blue-50 text-gray-900 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-md transition-all duration-300"
-//           />
-//           <textarea
-//             placeholder="Message"
-//             rows={5}
-//             className="w-full mt-4 p-3 bg-blue-50 text-gray-900 rounded-md border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-md transition-all duration-300"
-//           />
-//           <button className="w-full p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold mt-4 shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 font-['Inter',_Helvetica,_Arial,_sans-serif]">
-//             Send Message
-//           </button>
-//           {/* <div className="absolute top-4 right-4 text-blue-600 text-3xl font-bold font-['Inter',_Helvetica,_Arial,_sans-serif] opacity-20">
-//             ✉
-//           </div> */}
-//         </motion.div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Contact;
-
-
 'use client';
 
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -206,11 +67,33 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        toast.success('Message sent successfully!');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        toast.error(data.message || 'Failed to send message. Please try again later.');
+      }
+    } catch (error) {
+      toast.error('Something went wrong. Please try again later.');
+    }
   };
+
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 mt-[60px] sm:mt-0">
@@ -440,12 +323,13 @@ const Contact = () => {
                       className="w-full p-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <span className="relative z-10 flex items-center justify-center">
+
+                      <span className="relative z-10 flex items-center align-middle justify-center">
                         Send Message
-                        <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
+                        <img className='w-5 h-5 ml-2 mt-1 group-hover:translate-x-1 transition-transform duration-300' src="./Message.svg" alt="" />
+
                       </span>
+
                     </button>
                   </form>
                 </div>

@@ -1,102 +1,162 @@
-// import React from 'react';
+// import React, { useRef } from 'react';
+// import { motion, useInView } from 'framer-motion';
 
-// const AboutPage = () => {
+// const About = () => {
+//   // Animation variants
+//   const fadeInUp = {
+//     hidden: { opacity: 0, y: 50 },
+//     visible: {
+//       opacity: 1,
+//       y: 0,
+//       transition: { duration: 0.6, ease: 'easeOut' }
+//     }
+//   };
+
+//   const staggerContainer = {
+//     hidden: { opacity: 0 },
+//     visible: {
+//       opacity: 1,
+//       transition: {
+//         staggerChildren: 0.2,
+//         delayChildren: 0.1
+//       }
+//     }
+//   };
+
+//   const cardVariant = {
+//     hidden: { opacity: 0, y: 30 },
+//     visible: {
+//       opacity: 1,
+//       y: 0,
+//       transition: { duration: 0.5, ease: 'easeOut' }
+//     }
+//   };
+
+//   // Refs for scroll animations
+//   const heroRef = useRef(null);
+//   const featuresRef = useRef(null);
+//   const visionRef = useRef(null);
+//   const ctaRef = useRef(null);
+
+//   const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
+//   const featuresInView = useInView(featuresRef, { once: true, amount: 0.2 });
+//   const visionInView = useInView(visionRef, { once: true, amount: 0.3 });
+//   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
+
 //   return (
-//     <div className="min-h-screen bg-gray-100 font-sans">
-//       {/* Header */}
-//       {/* <header className="bg-purple-600 text-white py-6">
-//         <div className="container mx-auto px-4">
-//           <h1 className="text-3xl font-bold">BlogSphere</h1>
-//           <p className="mt-2 text-lg">A space where every voice matters</p>
+//     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+//       {/* Hero Section */}
+//       <motion.section
+//         ref={heroRef}
+//         initial="hidden"
+//         animate={heroInView ? "visible" : "hidden"}
+//         variants={fadeInUp}
+//         className="relative py-20 px-6 text-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden"
+//       >
+//         <div className="absolute inset-0 bg-black opacity-10"></div>
+//         <div className="relative max-w-4xl mx-auto">
+//           <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
+//             Welcome to <span className="text-yellow-300">BlogSphere</span>
+//           </h1>
+//           <p className="text-xl md:text-2xl font-light max-w-3xl mx-auto leading-relaxed mb-6">
+//             We built this platform with one revolutionary goal: <strong>To democratize storytelling and give every voice the power to reach the world.</strong>
+//           </p>
+//           <motion.p
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             transition={{ delay: 0.8, duration: 0.6 }}
+//             className="text-lg mt-6 text-blue-100 max-w-2xl mx-auto"
+//           >
+//             Whether you're a seasoned author, an aspiring journalist, or someone with a story burning inside you — this is your digital canvas to create, inspire, and connect with minds across the globe.
+//           </motion.p>
 //         </div>
-//       </header> */}
+//       </motion.section>
 
-//       {/* Main Content */}
-//       <main className="flex-grow container mx-auto px-4 py-12">
-//         {/* About Section */}
-//         <section className="mb-16">
-//           <h2 className="text-4xl font-bold text-gray-800 mb-6 transition-colors duration-300 hover:text-purple-600">
-//             ✨ Welcome to BlogSphere
-//           </h2>
-//           <p className="text-lg text-gray-600 leading-relaxed">
-//             We built this platform with one simple goal: <br />
-//             <span className="font-semibold text-purple-600">
-//               To give everyone the power to share their thoughts, stories, and ideas with the world.
-//             </span>
-//           </p>
-//           <p className="text-lg text-gray-600 mt-4 leading-relaxed">
-//             Whether you're a seasoned writer, a passionate thinker, or someone just starting out — this is your space to write, express, and connect.
-//           </p>
-//         </section>
-
-//         {/* Features Section */}
-//         <section className="mb-16">
-//           <h2 className="text-3xl font-bold text-gray-800 mb-8 transition-colors duration-300 hover:text-purple-600">
-//             🛠️ What You Can Do Here
-//           </h2>
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//             {[
-//               { icon: '✍️', title: 'Create a free account', desc: 'Start sharing your thoughts with the world in minutes.' },
-//               { icon: '🧾', title: 'Write and publish blogs', desc: 'Long-form stories, quick tips, tutorials, poetry — anything that inspires you.' },
-//               { icon: '🔍', title: 'Discover content from others', desc: 'Explore ideas from fellow writers across various topics.' },
-//               { icon: '❤️', title: 'Connect and engage', desc: 'Follow writers, leave comments, and be part of a growing community.' },
-//             ].map((feature, index) => (
-//               <div
-//                 key={index}
-//                 className="p-6 bg-white rounded-lg shadow-md transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl"
-//               >
-//                 <span className="text-3xl transition-transform duration-300 hover:scale-125 inline-block mb-4">
-//                   {feature.icon}
-//                 </span>
-//                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
-//                 <p className="text-gray-600">{feature.desc}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </section>
-
-//         {/* Vision Section */}
-//         <section className="mb-16">
-//           <h2 className="text-3xl font-bold text-gray-800 mb-8 transition-colors duration-300 hover:text-purple-600">
-//             🌱 Our Vision
-//           </h2>
-//           <div className="bg-white p-8 rounded-lg shadow-md transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl">
-//             <p className="text-lg text-gray-600 leading-relaxed">
-//               We believe writing is a superpower. By creating an open platform, we want to:
+//       {/* Features Section */}
+//       <motion.section
+//         ref={featuresRef}
+//         initial="hidden"
+//         animate={featuresInView ? "visible" : "hidden"}
+//         variants={staggerContainer}
+//         className="py-20 px-6"
+//       >
+//         <div className="max-w-6xl mx-auto">
+//           <motion.div variants={cardVariant} className="text-center mb-16">
+//             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+//               What Makes Us Different
+//             </h2>
+//             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+//               Discover the tools and features that transform your ideas into compelling stories
 //             </p>
-//             <ul className="list-disc list-inside mt-4 text-gray-600 space-y-2">
-//               <li className="transition-colors duration-300 hover:text-purple-600">Empower new voices</li>
-//               <li className="transition-colors duration-300 hover:text-purple-600">Encourage thoughtful dialogue</li>
-//               <li className="transition-colors duration-300 hover:text-purple-600">Build a diverse, respectful community of readers and writers</li>
-//             </ul>
+//           </motion.div>
+
+//           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+//             <motion.div
+//               variants={cardVariant}
+//               className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
+//             >
+//               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+//                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+//                 </svg>
+//               </div>
+//               <h3 className="text-xl font-bold text-gray-800 mb-3">Create Your Identity</h3>
+//               <p className="text-gray-600 leading-relaxed">
+//                 Build your unique writer profile and establish your personal brand in the digital literary world.
+//               </p>
+//             </motion.div>
+
+//             <motion.div
+//               variants={cardVariant}
+//               className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
+//             >
+//               <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+//                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+//                 </svg>
+//               </div>
+//               <h3 className="text-xl font-bold text-gray-800 mb-3">Publish Anything</h3>
+//               <p className="text-gray-600 leading-relaxed">
+//                 From deep philosophical essays to quick life hacks, poetry to tutorials — your creativity knows no bounds here.
+//               </p>
+//             </motion.div>
+
+//             <motion.div
+//               variants={cardVariant}
+//               className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
+//             >
+//               <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+//                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+//                 </svg>
+//               </div>
+//               <h3 className="text-xl font-bold text-gray-800 mb-3">Discover Stories</h3>
+//               <p className="text-gray-600 leading-relaxed">
+//                 Explore a universe of perspectives, dive into diverse topics, and find writers who challenge and inspire you.
+//               </p>
+//             </motion.div>
+
+//             <motion.div
+//               variants={cardVariant}
+//               className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
+//             >
+//               <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+//                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+//                 </svg>
+//               </div>
+//               <h3 className="text-xl font-bold text-gray-800 mb-3">Build Community</h3>
+//               <p className="text-gray-600 leading-relaxed">
+//                 Connect with like-minded readers, engage in meaningful discussions, and become part of a thriving creative ecosystem.
+//               </p>
+//             </motion.div>
 //           </div>
-//         </section>
-
-//         {/* Join Us Section */}
-//         <section className="text-center">
-//           <h2 className="text-3xl font-bold text-gray-800 mb-6 transition-colors duration-300 hover:text-purple-600">
-//             👥 Join Us
-//           </h2>
-//           <p className="text-lg text-gray-600 mb-6">
-//             Whether you're here to read or write — or both — we're glad to have you.
-//           </p>
-//           <button className="bg-purple-600 text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-purple-700 hover:scale-105">
-//             Create. Share. Inspire.
-//           </button>
-//         </section>
-//       </main>
-
-//       {/* Footer */}
-//       <footer className="bg-gray-800 text-white py-6">
-//         <div className="container mx-auto px-4 text-center">
-//           <p>&copy; 2025 BlogSphere. All rights reserved.</p>
 //         </div>
-//       </footer>
-//     </div>
-//   );
-// };
+//       </motion.section>
+//       </div>
+// )}
 
-// export default AboutPage;
+// export default About;
 
 
 
@@ -106,11 +166,11 @@ import { motion, useInView } from 'framer-motion';
 const About = () => {
   // Animation variants
   const fadeInUp = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 80 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' }
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
     }
   };
 
@@ -119,18 +179,46 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
+        staggerChildren: 0.15,
+        delayChildren: 0.2
       }
     }
   };
 
   const cardVariant = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: 'easeOut' }
+      scale: 1,
+      transition: { 
+        duration: 0.6, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        type: "spring",
+        stiffness: 100
+      }
+    }
+  };
+
+  const floatingAnimation = {
+    animate: {
+      y: [-10, 10, -10],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const pulseAnimation = {
+    animate: {
+      scale: [1, 1.05, 1],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
     }
   };
 
@@ -146,32 +234,134 @@ const About = () => {
   const ctaInView = useInView(ctaRef, { once: true, amount: 0.3 });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-50 overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          {...floatingAnimation}
+          className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-indigo-400/10 to-blue-500/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          {...floatingAnimation}
+          style={{ animationDelay: "2s" }}
+          className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-blue-400/10 to-indigo-600/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          {...floatingAnimation}
+          style={{ animationDelay: "1s" }}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-indigo-300/5 to-blue-400/5 rounded-full blur-3xl"
+        />
+      </div>
+
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
         initial="hidden"
         animate={heroInView ? "visible" : "hidden"}
         variants={fadeInUp}
-        className="relative py-20 px-6 text-center bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden"
+        className="relative py-24 px-6 text-center bg-gradient-to-br from-indigo-900 via-indigo-800 to-blue-900 text-white overflow-hidden"
       >
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        <div className="relative max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
-            Welcome to <span className="text-yellow-300">BlogSphere</span>
-          </h1>
-          <p className="text-xl md:text-2xl font-light max-w-3xl mx-auto leading-relaxed mb-6">
-            We built this platform with one revolutionary goal: <strong>To democratize storytelling and give every voice the power to reach the world.</strong>
-          </p>
+        {/* Animated background pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/90 to-blue-900/90"></div>
+          <motion.div
+            animate={{
+              backgroundPosition: ["0% 0%", "100% 100%"],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "linear"
+            }}
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: `radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.3) 0%, transparent 50%), 
+                               radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)`,
+              backgroundSize: "100px 100px"
+            }}
+          />
+        </div>
+        
+        <div className="relative max-w-5xl mx-auto z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+              Welcome to{" "}
+              <motion.span
+                className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-orange-400"
+                {...pulseAnimation}
+              >
+                BlogSphere
+              </motion.span>
+            </h1>
+          </motion.div>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-2xl md:text-3xl font-light max-w-4xl mx-auto leading-relaxed mb-8 text-indigo-100"
+          >
+            We built this platform with one{" "}
+            <motion.span
+              className="text-yellow-300 font-bold"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              revolutionary goal
+            </motion.span>
+            : To democratize storytelling and give every voice the power to reach the world.
+          </motion.p>
+          
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="text-lg mt-6 text-blue-100 max-w-2xl mx-auto"
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="text-xl mt-8 text-indigo-200 max-w-3xl mx-auto leading-relaxed"
           >
-            Whether you're a seasoned author, an aspiring journalist, or someone with a story burning inside you — this is your digital canvas to create, inspire, and connect with minds across the globe.
+            Whether you're a seasoned author, an aspiring journalist, or someone with a story burning inside you — 
+            this is your digital canvas to create, inspire, and connect with minds across the globe.
           </motion.p>
+
+          {/* Floating CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.6 }}
+            className="mt-12"
+          >
+            <motion.button
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(99, 102, 241, 0.4)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-indigo-900 font-bold text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
+            >
+              Start Your Journey
+            </motion.button>
+          </motion.div>
         </div>
+
+        {/* Floating geometric shapes */}
+        <motion.div
+          {...floatingAnimation}
+          className="absolute top-20 left-20 w-4 h-4 bg-yellow-400 rotate-45 opacity-70"
+        />
+        <motion.div
+          {...floatingAnimation}
+          style={{ animationDelay: "1.5s" }}
+          className="absolute bottom-32 right-24 w-6 h-6 bg-indigo-300 rounded-full opacity-60"
+        />
+        <motion.div
+          {...floatingAnimation}
+          style={{ animationDelay: "0.5s" }}
+          className="absolute top-1/3 right-16 w-3 h-3 bg-blue-300 opacity-80"
+        />
       </motion.section>
 
       {/* Features Section */}
@@ -180,82 +370,239 @@ const About = () => {
         initial="hidden"
         animate={featuresInView ? "visible" : "hidden"}
         variants={staggerContainer}
-        className="py-20 px-6"
+        className="py-24 px-6 relative"
       >
-        <div className="max-w-6xl mx-auto">
-          <motion.div variants={cardVariant} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+        <div className="max-w-7xl mx-auto">
+          <motion.div variants={cardVariant} className="text-center mb-20">
+            <motion.h2
+              className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-800 via-blue-700 to-indigo-900 mb-6"
+              whileInView={{ scale: [0.9, 1] }}
+              transition={{ duration: 0.8 }}
+            >
               What Makes Us Different
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            </motion.h2>
+            <motion.p
+              className="text-2xl text-indigo-600 max-w-3xl mx-auto font-medium"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
               Discover the tools and features that transform your ideas into compelling stories
-            </p>
+            </motion.p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <motion.div
-              variants={cardVariant}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
-            >
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Create Your Identity</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Build your unique writer profile and establish your personal brand in the digital literary world.
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={cardVariant}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
-            >
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Publish Anything</h3>
-              <p className="text-gray-600 leading-relaxed">
-                From deep philosophical essays to quick life hacks, poetry to tutorials — your creativity knows no bounds here.
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={cardVariant}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
-            >
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Discover Stories</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Explore a universe of perspectives, dive into diverse topics, and find writers who challenge and inspire you.
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={cardVariant}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
-            >
-              <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Build Community</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Connect with like-minded readers, engage in meaningful discussions, and become part of a thriving creative ecosystem.
-              </p>
-            </motion.div>
+            {[
+              {
+                icon: (
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                ),
+                title: "Create Your Identity",
+                description: "Build your unique writer profile and establish your personal brand in the digital literary world.",
+                gradient: "from-indigo-500 to-blue-600"
+              },
+              {
+                icon: (
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                ),
+                title: "Publish Anything",
+                description: "From deep philosophical essays to quick life hacks, poetry to tutorials — your creativity knows no bounds here.",
+                gradient: "from-blue-500 to-indigo-600"
+              },
+              {
+                icon: (
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                ),
+                title: "Discover Stories",
+                description: "Explore a universe of perspectives, dive into diverse topics, and find writers who challenge and inspire you.",
+                gradient: "from-indigo-600 to-blue-700"
+              },
+              {
+                icon: (
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                ),
+                title: "Build Community",
+                description: "Connect with like-minded readers, engage in meaningful discussions, and become part of a thriving creative ecosystem.",
+                gradient: "from-blue-600 to-indigo-700"
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                variants={cardVariant}
+                whileHover={{ 
+                  y: -10,
+                  scale: 1.02,
+                  transition: { duration: 0.3 }
+                }}
+                className="group relative"
+              >
+                <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 border border-indigo-100 hover:border-indigo-300 h-full relative overflow-hidden">
+                  {/* Animated background gradient */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    initial={false}
+                  />
+                  
+                  <div className="relative z-10">
+                    <motion.div
+                      className={`w-20 h-20 bg-gradient-to-r ${feature.gradient} rounded-2xl flex items-center justify-center mb-8 shadow-lg`}
+                      whileHover={{ 
+                        scale: 1.1,
+                        rotate: 5,
+                        boxShadow: "0 20px 40px rgba(99, 102, 241, 0.3)"
+                      }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      {feature.icon}
+                    </motion.div>
+                    
+                    <h3 className="text-2xl font-bold text-indigo-900 mb-4 group-hover:text-indigo-700 transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+                    
+                    <p className="text-indigo-600 leading-relaxed text-lg">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </motion.section>
-      </div>
-)}
+
+      {/* Vision Section */}
+      <motion.section
+        ref={visionRef}
+        initial="hidden"
+        animate={visionInView ? "visible" : "hidden"}
+        variants={fadeInUp}
+        className="py-24 px-6 bg-gradient-to-r from-indigo-900/95 via-blue-900/95 to-indigo-900/95 text-white relative overflow-hidden"
+      >
+        {/* Animated background */}
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            rotate: [0, 5, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute inset-0 bg-gradient-to-br from-indigo-800/30 to-blue-800/30 blur-3xl"
+        />
+        
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <motion.h2
+            className="text-5xl md:text-6xl font-black mb-8 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-400"
+            whileInView={{ scale: [0.8, 1] }}
+            transition={{ duration: 0.8 }}
+          >
+            Our Vision
+          </motion.h2>
+          
+          <motion.p
+            className="text-2xl md:text-3xl leading-relaxed mb-12 text-indigo-100"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            To create a world where every story matters, every voice is heard, and every writer has the power to make a difference through their words.
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="grid md:grid-cols-3 gap-8 text-center"
+          >
+            {[
+              { number: "10K+", label: "Active Writers" },
+              { number: "50K+", label: "Stories Published" },
+              { number: "1M+", label: "Readers Inspired" }
+            ].map((stat, index) => (
+              <div key={index} className="group">
+                <motion.div
+                  className="text-5xl md:text-6xl font-black text-yellow-400 mb-2"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {stat.number}
+                </motion.div>
+                <div className="text-xl text-indigo-200 font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* CTA Section */}
+      <motion.section
+        ref={ctaRef}
+        initial="hidden"
+        animate={ctaInView ? "visible" : "hidden"}
+        variants={fadeInUp}
+        className="py-24 px-6 text-center relative"
+      >
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-800 to-blue-800 mb-8"
+            whileInView={{ scale: [0.9, 1] }}
+            transition={{ duration: 0.8 }}
+          >
+            Ready to Share Your Story?
+          </motion.h2>
+          
+          <motion.p
+            className="text-2xl text-indigo-600 mb-12 leading-relaxed"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            Join thousands of writers who are already making their mark on BlogSphere
+          </motion.p>
+          
+          <motion.div
+            className="flex flex-col sm:flex-row gap-6 justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <motion.button
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(99, 102, 241, 0.4)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-4 bg-gradient-to-r from-indigo-600 to-blue-700 text-white font-bold text-xl rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
+            >
+              Start Writing Now
+            </motion.button>
+            
+            <motion.button
+              whileHover={{ 
+                scale: 1.05,
+                backgroundColor: "rgba(99, 102, 241, 0.1)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-4 border-2 border-indigo-600 text-indigo-600 font-bold text-xl rounded-full hover:bg-indigo-50 transition-all duration-300"
+            >
+              Explore Stories
+            </motion.button>
+          </motion.div>
+        </div>
+      </motion.section>
+    </div>
+  );
+};
 
 export default About;

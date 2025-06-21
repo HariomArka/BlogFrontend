@@ -12,7 +12,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isAnimated, setIsAnimated] = useState(false);
-  const { setIsLoggedIn, setUsername } = useAuth();
+  const { setIsLoggedIn, setUsername,blogCount,userCount,writerCount } = useAuth();
 
   useEffect(() => {
     setIsAnimated(true);
@@ -20,6 +20,7 @@ const Login = () => {
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
+    setFormData({username:'',password:''});
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
@@ -117,9 +118,9 @@ const Login = () => {
             {/* Animated Stats */}
             <div className="grid grid-cols-3 gap-6 w-full max-w-md">
               {[
-                { label: 'Stories', value: '10K+' },
-                { label: 'Writers', value: '5K+' },
-                { label: 'Readers', value: '50K+' }
+                { label: 'Stories', value: blogCount+ ' +'},
+                { label: 'Writers', value: writerCount + ' +' },
+                { label: 'Readers', value: userCount + ' +'}
               ].map((stat, index) => (
                 <div key={index} className="text-center group cursor-pointer">
                   <div className="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
@@ -185,17 +186,6 @@ const Login = () => {
                     </button>
                   </div>
 
-                  {/* Remember Me & Forgot Password */}
-                  <div className="flex items-center justify-between text-sm">
-                    <label className="flex items-center space-x-2 cursor-pointer group">
-                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 bg-white/10 border-white/20" />
-                      <span className="text-gray-300 group-hover:text-white transition-colors duration-300">Remember me</span>
-                    </label>
-                    <a href="#" className="text-purple-400 hover:text-purple-300 transition-colors duration-300">
-                      Forgot password?
-                    </a>
-                  </div>
-
                   {/* Login Button */}
                   <button
                     type="submit"
@@ -232,13 +222,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      {/* Floating Action Elements */}
-      <div className="absolute bottom-8 right-8 flex space-x-4">
-        <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
-          <span className="text-white text-xl">?</span>
-        </div>
-      </div>
+      
     </div>
   );
 };

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Blogcard from '../components/Blogcard';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
-const Home = () => {
+const Allblogs = () => {
   const [blogs, setBlogs] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [visibleBlogs, setVisibleBlogs] = useState(6);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [isLiking, setIsLiking] = useState(false);
-  const { userCount,setuserCount,blogCount,setblogCount,writerCount,setwriterCount } = useAuth();
+
 
   // Add these state variables to your existing useState declarations
   const [showCommentForm, setShowCommentForm] = useState(false);
@@ -33,36 +31,22 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+
     const fetchBlogs = async () => {
-      const response = await fetch('/api/blogs');
-      const json = await response.json();
+      const response = await fetch('/api/blogs')
+      const json = await response.json()
+
+      //console.log(json)
 
       if (response.ok) {
-        setBlogs(json);
-        setblogCount(json.length)
-        // Count unique usernames
-        const uniqueUsernames = new Set(json.map(blog => blog.username));
-        
-        setwriterCount(uniqueUsernames.size)
-        console.log('Total Unique Users:', uniqueUsernames.size);
+        setBlogs(json)
       }
-    };
-
-    fetchBlogs();
-  }, []);
-
-  useEffect(() => {
-  const fetchUsernumber = async () => {
-    const response = await fetch('/api/auth/totalusers');
-    const json = await response.json();
-console.log(json)
-    if (response.ok) {
-     setuserCount(''+json.totalUsers); // ✅ store count properly
     }
-  };
 
-  fetchUsernumber();
-}, []);
+    fetchBlogs()
+  }, [])
+
+  //const [likes, setLikes] = useState(initialLikes);
 
   const FloatingShape = ({ delay, size, position }) => (
     <div
@@ -172,98 +156,7 @@ console.log(json)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20">
-      {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(99, 102, 241, 0.3) 0%, transparent 50%)`
-            }}
-          />
-
-          {/* Floating Shapes */}
-          <FloatingShape delay={0} size="w-32 h-32" position={{ x: 10, y: 20 }} />
-          <FloatingShape delay={2} size="w-24 h-24" position={{ x: 80, y: 10 }} />
-          <FloatingShape delay={4} size="w-40 h-40" position={{ x: 70, y: 70 }} />
-          <FloatingShape delay={1} size="w-20 h-20" position={{ x: 20, y: 80 }} />
-          <FloatingShape delay={3} size="w-28 h-28" position={{ x: 85, y: 40 }} />
-
-        </div>
-
-        {/* Main Content */}
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-6">
-          <div className={`text-center max-w-5xl transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-
-            {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 mb-8 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-              <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
-              <span className="text-sm font-medium text-white/90">{blogs ? blogCount : ''} + blogs for you</span>
-            </div>
-
-            {/* Main Heading */}
-            <h1 className="text-6xl md:text-8xl font-black mb-6 leading-tight">
-              <span className="block bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-                Discover Stories
-              </span>
-              <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-pulse">
-                That Inspire
-              </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-xl md:text-2xl mb-10 font-light text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Join our vibrant community of{' '}
-              <span className="text-blue-300 font-semibold">storytellers</span> and{' '}
-              <span className="text-purple-300 font-semibold">dreamers</span>{' '}
-              to share experiences that move the world
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <Link
-                to="/writeblog"
-                className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10 flex items-center">
-                  🚀 Start Writing Now
-                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </span>
-              </Link>
-              <Link to="/allblog">
-                <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-semibold text-lg border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
-                  📚 Explore Stories
-                </button>
-              </Link>
-            </div>
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-1">{writerCount}+</div>
-                <div className="text-sm text-white/60">Writers</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-1">{blogs ? blogCount: ''}+</div>
-                <div className="text-sm text-white/60">Stories</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-1">{userCount}+</div>
-                <div className="text-sm text-white/60">Readers</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white mb-1">1+</div>
-                <div className="text-sm text-white/60">Countries</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
       {/* Blog Cards Section */}
       <section className="relative py-24 px-6 overflow-hidden">
         {/* Enhanced Background Elements */}
@@ -296,7 +189,7 @@ console.log(json)
             {/* Main Title with Enhanced Gradient */}
             <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-6 relative">
               <span className="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent drop-shadow-2xl">
-                Latest Stories
+                All Blogs
               </span>
               {/* Glowing underline effect */}
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50" />
@@ -507,26 +400,38 @@ console.log(json)
                         </div>
                       </div>
 
-                      
+                      {/* Action Buttons */}
+                      <div className="flex items-center space-x-3">
+                        <button className="p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
+                          <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                          </svg>
+                        </button>
+                        <button className="p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
+                          <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
 
                     {/* Article Content */}
                     <div className="prose prose-lg max-w-none">
                       <div className="text-white/90 leading-relaxed space-y-6">
-                        <div className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
-                          {selectedBlog.description
-                            .split('\n\n') // Split into paragraphs
-                            .map((para, i) => (
-                              <p key={i} className="mb-3">
-                                {para.split('\n').map((line, j, arr) => (
-                                  <React.Fragment key={j}>
-                                    {line}
-                                    {j !== arr.length - 1 && <br />}
-                                  </React.Fragment>
-                                ))}
-                              </p>
-                            ))}
-                        </div>
+                         <div className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
+                                                      {selectedBlog.description
+                                                        .split('\n\n') // Split into paragraphs
+                                                        .map((para, i) => (
+                                                          <p key={i} className="mb-3">
+                                                            {para.split('\n').map((line, j, arr) => (
+                                                              <React.Fragment key={j}>
+                                                                {line}
+                                                                {j !== arr.length - 1 && <br />}
+                                                              </React.Fragment>
+                                                            ))}
+                                                          </p>
+                                                        ))}
+                                                    </div>
 
                       </div>
 
@@ -599,7 +504,7 @@ console.log(json)
                           </button>
 
                           {/* Comment Form Modal */}
-
+                          
                           {showCommentForm && (
                             <div className="fixed inset-0 z-[20000] flex items-center justify-center p-4">
                               {/* Backdrop */}
@@ -704,23 +609,9 @@ console.log(json)
       )}
 
 
-      <style jsx>{`
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        
-        .line-clamp-3 {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-      `}</style>
+
     </div>
   );
 };
 
-export default Home;
+export default Allblogs;

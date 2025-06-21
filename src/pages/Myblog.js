@@ -1,4 +1,3 @@
-//New things
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -6,6 +5,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext'; // adjust path as needed
 import Blogcard from '../components/Blogcard';
+import toast from 'react-hot-toast';
 
 const MyBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -42,22 +42,6 @@ const MyBlogs = () => {
     }
   };
 
-  // const handleReadMore = (blog) => {
-  //   setSelectedBlog(blog);
-  //   setShowDetailModal(true);
-  // };
-
-  // const handleEdit = (blog) => {
-  //   setEditFormData({
-  //     title: blog.title,
-  //     content: blog.content,
-  //     choice: blog.choice,
-  //     image: blog.image,
-  //   });
-  //   setSelectedBlog(blog);
-  //   setShowEditModal(true);
-  // };
-
   const handleUpdateBlog = async (e, blogId) => {
     e.preventDefault();
 
@@ -81,10 +65,9 @@ const MyBlogs = () => {
       setBlogs(blogs.map(b => (b._id === updated._id ? updated : b)));
       setShowEditModal(false);
       setSelectedBlog(updated);
-      alert('Blog updated successfully!');
+      toast.success('Blog updated successfully!')
     } catch (error) {
-      console.error('Error updating blog:', error);
-      alert('Update failed');
+      toast.error('Update failed')
     }
   };
 
@@ -104,10 +87,10 @@ const MyBlogs = () => {
         setShowDetailModal(false);
         setSelectedBlog(null);
       }
-      alert('Blog deleted successfully!');
+      toast.success('Blog deleted successfully!')
     } catch (error) {
       console.error('Error deleting blog:', error);
-      alert('Error deleting blog. Please try again.');
+      toast.error('Error deleting blog. Please try again.')
     }
   };
 
@@ -181,25 +164,6 @@ const MyBlogs = () => {
                     </h2>
                     <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full animate-pulse"></div>
                   </div>
-
-                  {/* Subtitle with typewriter effect simulation */}
-                  {/* <p className="text-xl text-gray-200 mb-12 opacity-90 animate-bounce delay-500">
-                    Please{' '}
-                    <Link
-                      to="/login"
-                      className="text-purple-300 hover:text-pink-300 underline decoration-2 underline-offset-4 decoration-purple-400 hover:decoration-pink-400 transition-all duration-300 font-semibold"
-                    >
-                      Login
-                    </Link>
-                    {' '}or{' '}
-                    <Link
-                      to="/register"
-                      className="text-blue-300 hover:text-cyan-300 underline decoration-2 underline-offset-4 decoration-blue-400 hover:decoration-cyan-400 transition-all duration-300 font-semibold"
-                    >
-                      Register
-                    </Link>
-                    {' '}to start writing your blog
-                  </p> */}
 
                   {/* Animated buttons */}
                   <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -386,20 +350,6 @@ const MyBlogs = () => {
                             </div>
 
                           </div>
-
-                          {/* Action Buttons */}
-                          <div className="flex items-center space-x-3">
-                            <button className="p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
-                              <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-                              </svg>
-                            </button>
-                            <button className="p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
-                              <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                              </svg>
-                            </button>
-                          </div>
                         </div>
 
                         {/* Article Content */}
@@ -527,92 +477,6 @@ const MyBlogs = () => {
               </div>
             </div>
           )}
-
-          {/* Edit Modal */}
-          {/* {showEditModal && selectedBlog && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
-              <div className="bg-gradient-to-br from-gray-900/95 to-purple-900/95 backdrop-blur-xl rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto border border-white/20 shadow-2xl animate-slideInScale">
-                <div className="p-8">
-                  <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-3xl font-bold text-white flex items-center gap-3">
-                      <Edit className="w-8 h-8 text-purple-400" />
-                      Edit Blog
-                    </h2>
-                    <button
-                      onClick={() => setShowEditModal(false)}
-                      className="p-3 text-gray-400 hover:text-gray-300 hover:bg-gray-500/20 rounded-full transition-all duration-300 transform hover:scale-110"
-                    >
-                      <X className="w-6 h-6" />
-                    </button>
-                  </div>
-
-                  <div className="space-y-6">
-
-                    <div className="animate-slideInUp" style={{ animationDelay: '100ms' }}>
-                      <label className="block text-sm font-medium text-purple-200 mb-3">Title</label>
-                      <input
-                        type="text"
-                        value={editFormData.title}
-                        onChange={(e) => setEditFormData({ ...editFormData, title: e.target.value })}
-                        className="w-full p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                      />
-                    </div>
-
-                    <div className="animate-slideInUp" style={{ animationDelay: '200ms' }}>
-                      <label className="block text-sm font-medium text-purple-200 mb-3">Content</label>
-                      <textarea
-                        value={editFormData.content}
-                        onChange={(e) => setEditFormData({ ...editFormData, content: e.target.value })}
-                        rows={12}
-                        className="w-full p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 resize-none"
-                      />
-                    </div>
-
-                    <div className="animate-slideInUp" style={{ animationDelay: '300ms' }}>
-                      <label className="block text-sm font-medium text-purple-200 mb-3">Image URL</label>
-                      <input
-                        type="text"
-                        value={editFormData.image}
-                        onChange={(e) => setEditFormData({ ...editFormData, image: e.target.value })}
-                        className="w-full p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                        placeholder="React, JavaScript, Web Development"
-                      />
-                    </div>
-
-                    <div className="animate-slideInUp" style={{ animationDelay: '400ms' }}>
-                      <label className="block text-sm font-medium text-purple-200 mb-3">Visibility</label>
-                      <select
-                        value={editFormData.choice}
-                        onChange={(e) => setEditFormData({ ...editFormData, choice: e.target.value })}
-                        className="w-full p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                      >
-                        <option value="public" className="bg-gray-800">Public</option>
-                        <option value="private" className="bg-gray-800">Private</option>
-                      </select>
-                    </div>
-
-                    <div className="flex gap-4 pt-6 animate-slideInUp" style={{ animationDelay: '500ms' }}>
-                      <button
-                        onClick={(e) => handleUpdateBlog(e, selectedBlog._id)}
-
-                        className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/25"
-                      >
-                        <Save className="w-5 h-5" />
-                        Update Blog
-                      </button>
-                      <button
-                        onClick={() => setShowEditModal(false)}
-                        className="flex-1 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )} */}
-
           {showEditModal && selectedBlog && (
             <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
               <style jsx>{`

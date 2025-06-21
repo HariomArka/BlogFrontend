@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Eye, EyeOff, User, Lock, Mail, ArrowRight, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -89,7 +90,7 @@ const Register = () => {
     // client‑side validation guard
     if (!validations.username || !validations.email ||
       !validations.password || !validations.confirmPassword) {
-      return alert('Please fix the highlighted errors first.');
+      return toast.error('Please fix the highlighted errors first.');
     }
 
     setIsLoading(true);
@@ -107,10 +108,9 @@ const Register = () => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify({ email: res.data.email }));
       // e.g. navigate('/dashboard');
-      alert('Registration successful!');
+      toast.success('Registration successful!');
     } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.error || 'Registration failed');
+      toast.error(err.response?.data?.error || 'Registration failed');
     } finally {
       setIsLoading(false);
     }

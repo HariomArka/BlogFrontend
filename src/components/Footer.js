@@ -1,4 +1,9 @@
+import {Link} from 'react-router-dom'
+import { useAuth } from '../context/AuthContext';
+
+
 const Footer = () => {
+const { userCount,blogCount,writerCount } = useAuth();
   return (
     <footer className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden">
       {/* Animated Background Elements */}
@@ -59,20 +64,20 @@ const Footer = () => {
                 {[
                   { href: "/", text: "Home", icon: "🏠" },
                   { href: "/about", text: "About", icon: "ℹ️" },
-                  { href: "/allblogs", text: "Write Your Blog", icon: "✍️" },
-                  { href: "/favourites", text: "Favourites", icon: "❤️" },
-                  { href: "/contacts", text: "Contact Us", icon: "📧" }
+                  { href: "/writeblog", text: "Write Your Blog", icon: "✍️" },
+                  { href: "/myblogs", text: "My Blogs", icon: "❤️" },
+                  { href: "/contact", text: "Contact Us", icon: "📧" }
                 ].map((link, index) => (
                   <li key={index} className="transform transition-all duration-300 hover:translate-x-2">
-                    <a
-                      href={link.href}
+                    <Link
+                      to={link.href}
                       className="flex items-center space-x-3 text-gray-300 hover:text-white group/link transition-all duration-300 hover:bg-white/5 rounded-lg p-2 -ml-2"
                     >
                       <span className="text-lg group-hover/link:animate-bounce">{link.icon}</span>
                       <span className="group-hover/link:bg-gradient-to-r group-hover/link:from-blue-400 group-hover/link:to-purple-400 group-hover/link:bg-clip-text group-hover/link:text-transparent font-medium">
                         {link.text}
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -112,15 +117,15 @@ const Footer = () => {
               <div className="space-y-3 text-gray-300">
                 <div className="flex items-center space-x-3 hover:text-white transition-colors duration-300">
                   <span className="text-blue-400">📍</span>
-                  <span>123 Blog Street, Content City</span>
+                  <span>Nehru hall of Residance, IIT Kharagpur, Kharagpur</span>
                 </div>
                 <div className="flex items-center space-x-3 hover:text-white transition-colors duration-300">
                   <span className="text-purple-400">📞</span>
-                  <span>+1 (555) 123-4567</span>
+                  <span>+91 9832416501</span>
                 </div>
                 <div className="flex items-center space-x-3 hover:text-white transition-colors duration-300">
                   <span className="text-pink-400">✉️</span>
-                  <span>hello@blogsphere.com</span>
+                  <span>blogspherehelpdesk@gmail.com</span>
                 </div>
               </div>
             </div>
@@ -130,10 +135,10 @@ const Footer = () => {
           <div className="mt-16 pt-8 border-t border-white/10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {[
-                { number: "10K+", label: "Active Writers", icon: "✍️" },
-                { number: "50K+", label: "Blog Posts", icon: "📚" },
-                { number: "1M+", label: "Monthly Readers", icon: "👥" },
-                { number: "25+", label: "Countries", icon: "🌍" }
+                { number: writerCount + ' +', label: "Active Writers", icon: "✍️" },
+                { number: blogCount + ' +', label: "Blog Posts", icon: "📚" },
+                { number: userCount + ' +', label: "Monthly Readers", icon: "👥" },
+                { number: "1 +", label: "Countries", icon: "🌍" }
               ].map((stat, index) => (
                 <div key={index} className="group transform transition-all duration-500 hover:scale-110">
                   <div className="text-3xl mb-2 group-hover:animate-bounce">{stat.icon}</div>

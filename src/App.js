@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import WriteBlog from './pages/WriteBlog';
 import Myblogs from './pages/Myblog';
 import ScrollToTop from './components/ScrollToTop';
+import Allblogs from './pages/Allblogs'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,6 +42,7 @@ const App = () => {
               <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/writeblog" element={<WriteBlog />} />
+              <Route path="/allblog" element={<Allblogs/>} />           
               <Route path="/myblogs" element={<Myblogs />} />
               <Route path="/register" element={<Register />} />
             </Routes>
