@@ -338,7 +338,7 @@ const WriteBlog = () => {
                       value={formData.image}
                       onChange={handleChange}
                       placeholder="Go to Pinterest, open it in new tab, copy the url(jpg, png, gif, webp)"
-                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-indigo-800text-gray-900 rounded-xl border-2 border-indigo-200 focus:outline-none focus:ring-4 focus:ring-indigo-700/50 focus:border-indigo-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
+                      className="w-full p-4 bg-gradient-to-r from-slate-700 to-indigo-800 text-gray-900 rounded-xl border-2 border-indigo-200 focus:outline-none focus:ring-4 focus:ring-indigo-700/50 focus:border-indigo-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg"
                       disabled={isSubmitting}
                     />
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-400/20 to-blue-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
