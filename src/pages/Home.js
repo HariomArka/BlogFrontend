@@ -677,9 +677,6 @@ const Home = () => {
                             </div>
                           )}
 
-                          <div className="text-sm text-white/60">
-                            Published {selectedBlog.timestamp}
-                          </div>
                         </div>
 
                       </div>

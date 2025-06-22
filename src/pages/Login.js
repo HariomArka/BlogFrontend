@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { Eye, EyeOff, User, Lock, Mail, ArrowRight, Sparkles } from 'lucide-react';
@@ -212,9 +212,9 @@ const Login = () => {
                   <div className="text-center">
                     <p className="text-gray-300">
                       Don't have an account?{' '}
-                      <a href="/register" className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-300 hover:underline">
+                      <Link to="/register" className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-300 hover:underline">
                         Create one now
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </div>

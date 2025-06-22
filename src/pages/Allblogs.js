@@ -90,7 +90,7 @@ const Allblogs = () => {
         const errorData = await response.json();
         //console.error('Server error:', errorData.error);
       } else {
-       // console.error('Failed to update likes. Status:', response.status);
+        // console.error('Failed to update likes. Status:', response.status);
       }
     } catch (error) {
       //console.error('Network error updating likes:', error);
@@ -149,7 +149,7 @@ const Allblogs = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20">
-      
+
       {/* Blog Cards Section */}
       <section className="relative py-24 px-6 overflow-hidden">
         {/* Enhanced Background Elements */}
@@ -391,39 +391,25 @@ const Allblogs = () => {
                           <span className="text-white/80 font-medium">5 min read</span>
                         </div>
                       </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex items-center space-x-3">
-                        <button className="p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
-                          <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-                          </svg>
-                        </button>
-                        <button className="p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all duration-300 hover:scale-105">
-                          <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                          </svg>
-                        </button>
-                      </div>
                     </div>
 
                     {/* Article Content */}
                     <div className="prose prose-lg max-w-none">
                       <div className="text-white/90 leading-relaxed space-y-6">
-                         <div className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
-                                                      {selectedBlog.description
-                                                        .split('\n\n') // Split into paragraphs
-                                                        .map((para, i) => (
-                                                          <p key={i} className="mb-3">
-                                                            {para.split('\n').map((line, j, arr) => (
-                                                              <React.Fragment key={j}>
-                                                                {line}
-                                                                {j !== arr.length - 1 && <br />}
-                                                              </React.Fragment>
-                                                            ))}
-                                                          </p>
-                                                        ))}
-                                                    </div>
+                        <div className="text-xl md:text-2xl font-light text-white/80 leading-relaxed">
+                          {selectedBlog.description
+                            .split('\n\n') // Split into paragraphs
+                            .map((para, i) => (
+                              <p key={i} className="mb-3">
+                                {para.split('\n').map((line, j, arr) => (
+                                  <React.Fragment key={j}>
+                                    {line}
+                                    {j !== arr.length - 1 && <br />}
+                                  </React.Fragment>
+                                ))}
+                              </p>
+                            ))}
+                        </div>
 
                       </div>
 
@@ -496,7 +482,7 @@ const Allblogs = () => {
                           </button>
 
                           {/* Comment Form Modal */}
-                          
+
                           {showCommentForm && (
                             <div className="fixed inset-0 z-[20000] flex items-center justify-center p-4">
                               {/* Backdrop */}
@@ -580,9 +566,9 @@ const Allblogs = () => {
                             </div>
                           )}
 
-                          <div className="text-sm text-white/60">
+                          {/* <div className="text-sm text-white/60">
                             Published {selectedBlog.timestamp}
-                          </div>
+                          </div> */}
                         </div>
 
                       </div>

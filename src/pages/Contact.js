@@ -96,7 +96,7 @@ const Contact = () => {
 
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 mt-[60px] sm:mt-0">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900  sm:mt-0">
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Gradient Orbs */}
@@ -164,7 +164,7 @@ const Contact = () => {
               initial="hidden"
               animate={contactInfoInView ? 'visible' : 'hidden'}
               variants={containerVariants}
-              className="space-y-8"
+              className="space-y-8 order-2 lg:order-1"
             >
               {/* Main Contact Card */}
               <motion.div
@@ -258,7 +258,7 @@ const Contact = () => {
               initial="hidden"
               animate={formInView ? 'visible' : 'hidden'}
               variants={cardVariants}
-              className="relative"
+              className="relative order-1 lg:order-2"
             >
               <div className="relative p-8 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 hover:border-white/40 transition-all duration-500">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 rounded-3xl"></div>

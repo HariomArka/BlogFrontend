@@ -569,11 +569,11 @@ const MyBlogs = () => {
 
                             </div>
 
-                            <div className="flex items-center space-x-4">
+                            {/* <div className=" items-center space-x-4">
                               <div className="text-sm text-white/60">
                                 Published {selectedBlog.timestamp}
                               </div>
-                            </div>
+                            </div> */}
 
                           </div>
                         </div>
@@ -736,8 +736,8 @@ const MyBlogs = () => {
                           onChange={(e) => setEditFormData({ ...editFormData, choice: e.target.value })}
                           className="w-full p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400/60 focus:bg-white/15 transition-all duration-300 hover:border-white/30 relative z-10 appearance-none cursor-pointer"
                         >
-                          <option value="public" className="bg-gray-800">Public</option>
-                          <option value="private" className="bg-gray-800">Private</option>
+                          <option value="public" className="bg-gray-800">Public - Edit to share with all</option>
+                          <option value="private" className="bg-gray-800">Private - Edit to make it secret</option>
                         </select>
                         <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl opacity-0 group-focus-within:opacity-100 blur-sm transition-all duration-300 pointer-events-none"></div>
                         {/* Custom dropdown arrow */}

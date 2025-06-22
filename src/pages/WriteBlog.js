@@ -237,13 +237,13 @@ const WriteBlog = () => {
         {/* Animated header */}
         <div className="text-center mb-12 transform transition-all duration-700 hover:scale-105">
           <h2 className="text-5xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 mb-4 font-sans tracking-tight animate-pulse">
-            Write Your <span className="relative">
+            Write Your <span className="relative text-white">
               Blog
               <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full transform origin-left animate-pulse"></div>
             </span>
           </h2>
 
-          <div className="text-gray-600 text-lg sm:text-xl font-sans max-w-2xl mx-auto transform transition-all duration-700 delay-300 opacity-90 hover:opacity-100">
+          <div className="text-gray-500 text-lg sm:text-xl font-sans max-w-2xl mx-auto transform transition-all duration-700 delay-300 opacity-90 hover:opacity-100">
             Share your thoughts and stories with the world. Fill out the form below to create your blog post.
           </div>
         </div>
@@ -381,8 +381,8 @@ const WriteBlog = () => {
                       className="w-full p-4 bg-gradient-to-r from-slate-700 to-slate-600text-gray-900 rounded-xl border-2 border-orange-200 focus:outline-none focus:ring-4 focus:ring-orange-300/50 focus:border-orange-500 focus:shadow-xl transition-all duration-500 hover:shadow-lg cursor-pointer"
                       disabled={isSubmitting}
                     >
-                      <option value="public">🌍 Public</option>
-                      <option value="private">🔒 Private</option>
+                      <option value="public">🌍 Public - Everyone can see your blog</option>
+                      <option value="private">🔒 Private - Only you can see your blog</option>
                     </select>
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400/20 to-yellow-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                   </div>
