@@ -158,7 +158,7 @@ const { userCount,blogCount,writerCount } = useAuth();
           <div className="mt-12 pt-8 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="text-gray-400 text-sm mb-4 md:mb-0">
-                <p>&copy; {new Date().getFullYear()} BlogSphere. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} Arka Ghosh & Sagnik De. All rights reserved.</p>
               </div>
               
             </div>

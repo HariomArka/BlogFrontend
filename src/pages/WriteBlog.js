@@ -51,7 +51,7 @@ const WriteBlog = () => {
     if (!formData.image.trim()) {
       newErrors.image = 'Image URL is required';
       isValid = false;
-    } else if (!/^https?:\/\/.+\$/i.test(formData.image)) {
+    } else if (!/^https?:\/\/.+$/i.test(formData.image)) {
       newErrors.image = 'Please provide a valid image URL';
       isValid = false;
     }

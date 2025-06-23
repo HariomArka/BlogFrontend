@@ -182,10 +182,10 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-1">Visit Us</h3>
-                      <p className="text-gray-300">Come say hello at our office</p>
+                      <p className="text-gray-300">Come say hello</p>
                     </div>
                   </div>
-                  <p className="text-gray-300 text-lg">Nehru hall of Residance, IIT Kharagpur, Kharagpur, West Bengal 721302</p>
+                  <p className="text-gray-300 text-lg">IIT Kharagpur, Kharagpur, West Bengal - 721302</p>
                 </div>
               </motion.div>
 
@@ -221,7 +221,7 @@ const Contact = () => {
                       </svg>
                     </div>
                     <h4 className="text-lg font-semibold text-white mb-2">Call Us</h4>
-                    <p className="text-gray-300">+91 98324 16501</p>
+                    <p className="text-gray-300">+91 98377 16501</p>
                   </div>
                 </motion.div>
               </div>
