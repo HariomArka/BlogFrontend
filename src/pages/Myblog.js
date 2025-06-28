@@ -82,7 +82,7 @@ const MyBlogs = () => {
 
   const deleteBlog = async (blogId) => {
     try {
-      await fetch(`${process.env.REACT_APP_BASE_URL}/api/auth/login/${blogId}`, { method: 'DELETE' });
+      await fetch(`${process.env.REACT_APP_BASE_URL}/api/blogs/${blogId}`, { method: 'DELETE' });
       setBlogs(blogs.filter(blog => blog._id !== blogId));
       if (selectedBlog && selectedBlog._id === blogId) {
         setShowDetailModal(false);
