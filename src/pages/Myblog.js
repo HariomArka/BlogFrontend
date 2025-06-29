@@ -54,7 +54,7 @@ const MyBlogs = () => {
         },
         body: JSON.stringify({
           title: editFormData.title,
-          image: selectedBlog.image, // Required by your model
+          image: editFormData.image, // Required by your model
           description: editFormData.content,
           choice: editFormData.choice,
           username: selectedBlog.username,
